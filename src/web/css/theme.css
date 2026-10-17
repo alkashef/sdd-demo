@@ -1,0 +1,46 @@
+/* The design tokens: every colour, font, size and gap of the front end.
+   It styles nothing itself. Other sheets read these custom properties and write no values. */
+
+:root {
+  --bg: #f6f7fc;
+  --surface: #fff;
+  --line: #e4e7f3;
+  --ink: #151833;
+  --muted: #5a6080;
+  --primary: #5b3df5;
+  --tint: #eeeaff;
+  --chip-ink: #3f26c9;
+  --mint: #19d3a5;
+  --track: #e9e6ff;
+  --mint-bg: #d6f8ec;
+  --mint-ink: #0a6b52;
+  --coral-bg: #ffe7e2;
+  --coral-ink: #a32a1c;
+  --sun-bg: #fff4d1;
+  --sun-ink: #6b4a00;
+  --sun-line: #f5d77a;
+  --neutral-bg: #eceef7;
+  --neutral-ink: #3f4560;
+  --font-sans: system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", consolas, monospace;
+  --font-size-heading: 28px;
+  --font-size-brand: 18px;
+  --font-size-body: 14px;
+  --font-size-meta: 13px;
+  --font-size-small: 12px;
+  --font-size-label: 11px;
+  --label-tracking: 0.06em;
+  --space-1: 2px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 20px;
+  --gutter: 24px;
+  --radius-item: 10px;
+  --radius-card: 16px;
+  --focus-ring-width: 2px;
+  --header-height: 64px;
+  --nav-width: 260px;
+  --page-max-width: 1440px;
+  --main-min-width: 560px;
+}

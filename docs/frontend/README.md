@@ -26,7 +26,7 @@ them are invented.
   label (job title or candidate name), then the file name below it in the small muted size. The
   selected item has the tint background and primary-colour label. It scrolls with the page.
 - Main: flex, wraps below the navigation on a phone (`flex: 999 1 560px`, `min-width: 0`).
-- Footer: "Runs locally at 127.0.0.1:8000." and the OpenAI data-flow notice (DEC-006).
+- Footer: "Runs locally on 127.0.0.1." (no port: the port is a setting, so the page does not write it) and the OpenAI data-flow notice (DEC-006).
 - Responsive: no horizontal scroll from phone to wide desktop. Facts and stats use
   `repeat(auto-fit, minmax(…, 1fr))` grids.
 

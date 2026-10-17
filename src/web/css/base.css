@@ -1,0 +1,38 @@
+/* The page defaults: reset, body text, headings, the focus ring and the error panel.
+   It styles no layout and no component of a view. */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--primary);
+  outline-offset: var(--focus-ring-width);
+}
+
+.error-panel {
+  margin: 0 0 var(--gutter);
+  padding: var(--space-4) var(--space-5);
+  overflow: auto;
+  background: var(--coral-bg);
+  color: var(--coral-ink);
+  border-radius: var(--radius-item);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-small);
+  white-space: pre-wrap;
+}

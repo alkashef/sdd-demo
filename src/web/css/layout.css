@@ -1,0 +1,155 @@
+/* The page shell: sticky header, navigation with its items, main area and footer.
+   It styles no content of a job or candidate view (detail.css does). */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page__body {
+  display: flex;
+  flex: 1 0 auto;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--gutter);
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: var(--gutter);
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+
+.app-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--header-height);
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.app-header__logo-box {
+  fill: var(--primary);
+}
+
+.app-header__logo-mark {
+  fill: none;
+  stroke: var(--surface);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.app-header__brand {
+  font-size: var(--font-size-brand);
+  font-weight: 700;
+}
+
+.app-header__counts {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: var(--font-size-meta);
+}
+
+.nav {
+  display: flex;
+  flex: 0 0 var(--nav-width);
+  flex-direction: column;
+  gap: var(--gutter);
+}
+
+.nav__heading {
+  padding: 0 var(--space-4) var(--space-2);
+  color: var(--muted);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+}
+
+.nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-item {
+  display: block;
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-item);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-item:hover,
+.nav-item--selected {
+  background: var(--tint);
+}
+
+.nav-item__label {
+  display: block;
+  font-size: var(--font-size-body);
+  font-weight: 600;
+}
+
+.nav-item--selected .nav-item__label {
+  color: var(--primary);
+}
+
+.nav-item__file {
+  display: block;
+  color: var(--muted);
+  font-size: var(--font-size-small);
+}
+
+.main {
+  display: flex;
+  flex: 999 1 var(--main-min-width);
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.main__title {
+  font-size: var(--font-size-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.main__hint {
+  color: var(--muted);
+}
+
+.app-footer {
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.app-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--gutter);
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: var(--space-5) var(--gutter);
+  color: var(--muted);
+  font-size: var(--font-size-small);
+}

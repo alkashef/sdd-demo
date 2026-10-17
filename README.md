@@ -8,15 +8,15 @@ The browser page that shows the results is not built yet (`src/web/` does not ex
 
 ## Stack
 
-Python 3.12, conda environment `sdd-demo`, pytest 9.1.1, ruff 0.17.1, mypy 2.4.0, python-dotenv 1.2.4 (settings), chromadb 1.5.9 (in-memory vector store), pydantic 2.14.1 (LLM reply schemas), openai 3.33.0 (LLM client), fastapi 0.143.3 and uvicorn 0.54.0 (HTTP API), httpx 0.28.1 (API test client), pytest-asyncio 1.4.0 (async tests). Node 22 runs the JavaScript checks.
+Python 3.12, conda environment `sdd-demo`, pytest 9.1.1, ruff 0.17.1, mypy 2.4.0, python-dotenv 1.2.4 (settings), chromadb 1.5.9 (in-memory vector store), pydantic 2.14.1 (LLM reply schemas), openai 3.33.0 (LLM client), fastapi 0.143.3 and uvicorn 0.54.0 (HTTP API), httpx 0.28.1 (API test client), pytest-asyncio 1.4.0 (async tests), playwright 1.64.0 (headless-browser UI tests). The front end is plain HTML, CSS and JavaScript with no runtime dependency. Node 22 runs the JavaScript checks.
 
 ## File structure
 
 | Path | Holds |
 | --- | --- |
 | `main.py` | The entry point: loads settings, sets up logging, connects the modules, starts the server. |
-| `src/` | All source code. `src/api/` is the HTTP layer. |
-| `tests/` | `unit/` and `e2e/` tests. |
+| `src/` | All source code. `src/api/` is the HTTP layer; `src/web/` is the front end (HTML, CSS, JavaScript). |
+| `tests/` | `unit/` and `e2e/` tests; `e2e/ui/` holds the headless-browser tests. |
 | `docs/` | Workflow, spec, design, and plan. |
 | `config/` | `.env` (never committed) and `.env.example`. |
 | `scripts/` | `check.py` (the checks), `milestones-runner.py`, `cleanup.py`, `lock.py`. |
@@ -65,4 +65,4 @@ The app reads the folders named in `config/.env`, runs every LLM call, then serv
 python -m pytest --cov=src --cov-branch --cov-fail-under=80
 ```
 
-`python scripts/check.py` runs every check (ruff, mypy, pytest, and the JavaScript checks). The tests use fakes: they need no `config/.env`, no network and no API key.
+`python scripts/check.py` runs every check (ruff, mypy, pytest, and the JavaScript checks). The tests use fakes: they need no `config/.env`, no network and no API key. The UI tests in `tests/e2e/ui/` drive the installed Microsoft Edge or Google Chrome in headless mode (Playwright downloads no browser); they fail if neither is installed.
