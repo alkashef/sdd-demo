@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M2** Records and attribute calculations | `records.py` and `attributes.py`: every CAL rule and the EXT-007 to EXT-009 derivations, proved with EX-001 to EX-004. | sonnet | high | open |
 | **M3** Ports, ranking and vector store | `ports.py`, `ranking.py` and the Chroma `vector_store.py`: similarity order, unscored items last. Installs `chromadb`. | sonnet | high | open |
 | **M4** File reader | `file_reader.py` reads CVs, job descriptions, prompt files and evaluation files; a missing folder or file stops with a clear message. | sonnet | medium | open |
 | **M5** Prompt data and CV extraction | `prompt_data.py`, the CV-facts schema, `extraction.py` and `prompts/extract_cv.md`. Installs `pydantic`. | sonnet | high | open |
@@ -29,14 +28,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M2 — Records and attribute calculations
-
-- **Refs:** CAL-001, CAL-002, CAL-003, CAL-004, CAL-005, CAL-007, CAL-008, CAL-009, CAL-010, EXT-007, EXT-008, EXT-009, MIS-001, EX-001 to EX-004, DEC-005, DEC-015, design section 3.
-- **Owner:** `src/records.py`, `src/attributes.py` (and `src/__init__.py`).
-- **Tests first:** `test_cal_001_total_employment_period_ex_001`, `test_cal_002_job_count_ex_001`, `test_cal_003_average_time_per_job_ex_001`, `test_cal_004_no_gap_ex_001`, `test_cal_004_gap_between_jobs`, `test_cal_005_months_since_graduation_ex_002`, `test_cal_007_currently_employed_ex_001`, `test_cal_008_present_is_current_month_and_both_months_counted`, `test_cal_009_unknown_end_gives_not_available_ex_003`, `test_cal_010_bad_job_dates_ex_004`, `test_cal_010_future_graduation_ex_004`, `test_ext_007_distinct_job_countries`, `test_ext_008_distinct_employers`, `test_ext_009_last_job_is_latest_start`, `test_mis_001_missing_values_stay_none`.
-- **Build:** the frozen records in design section 3, and the pure calculations and list derivations, with the date passed in.
-- **Gate:** all examples EX-001 to EX-004 pass as tests; the checks in `CLAUDE.md` pass.
 
 ### M3 — Ports, ranking and vector store
 
