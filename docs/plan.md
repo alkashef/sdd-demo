@@ -9,19 +9,10 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M17** Evaluation | `evaluation.py` and `main.py --evaluate` for NFR-004 and NFR-005; `.gitignore` exception so `gold_jobs.json` is committed (DEC-017). | sonnet | high | open |
 | **M18** Sample build script | `scripts/build_sample.py` rebuilds `data/sample/` from the raw TalentCLEF files (DEC-010). | sonnet | medium | open |
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M17 — Evaluation
-
-- **Refs:** NFR-004, NFR-005, RNK-001, EXT-009, DEC-017, design section 3 (evaluation files).
-- **Owner:** `src/evaluation.py`, `main.py` (`--evaluate`), `.gitignore`, `data/sample/gold_jobs.json`.
-- **Tests first:** `test_nfr_004_passes_when_two_of_top_three_are_labeled_relevant`, `test_nfr_004_fails_when_only_one_is_relevant`, `test_nfr_004_fails_with_no_labeled_job_description`, `test_nfr_005_match_needs_same_start_end_and_is_current`, `test_nfr_005_failed_extraction_counts_as_misses`, `test_nfr_005_extra_extracted_jobs_not_penalized`, `test_nfr_005_fails_with_no_gold_jobs`, `test_dec_017_ground_truth_parser_adds_txt_suffix`, `test_dec_017_report_has_counts_never_cv_content`, `test_dec_017_bad_file_stops_before_any_llm_call`, `test_dec_017_evaluate_exits_1_when_a_check_fails`.
-- **Build:** the pure parsing and checks; `main.py --evaluate` builds the same workspace, prints the report and exits 1 on a failed check; add the `.gitignore` exception for `data/sample/gold_jobs.json` and commit the file as drafted; document `--evaluate` in `README.md`.
-- **Gate:** the checks pass. The manual run with the live service is the user's, after the user reviews the gold file (spec section 7); the numbers are recorded later in the Check columns of DEC-003 and DEC-004.
 
 ### M18 — Sample build script
 

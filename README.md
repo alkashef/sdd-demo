@@ -23,7 +23,7 @@ Python 3.12, conda environment `sdd-demo`, pytest 9.1.1, ruff 0.17.1, mypy 2.4.0
 | `.claude/` | Claude Code settings, including the hook that checks each edit. |
 | `.githooks/` | `pre-commit`: refuses a commit unless the checks pass. |
 | `.vscode/` | Shared editor settings. |
-| `data/` | Input data. `data/sample/` holds the sample CVs and job descriptions. |
+| `data/` | Input data. `data/sample/` holds the sample CVs and job descriptions, and `gold_jobs.json`, the job dates the evaluation checks against (the only sample file committed). |
 | `models/` | Not used: the app has no local model. |
 | `prompts/` | LLM prompt files. |
 | `logs/` | The log file (created at run time, never committed). |
@@ -58,6 +58,19 @@ python main.py
 ```
 
 The app reads the folders named in `config/.env`, runs every LLM call, then serves on `SERVER_HOST:SERVER_PORT` (default `127.0.0.1:8000`). The terminal shows the progress. `GET /health` reports liveness; the other endpoints are in section 4 of `docs/design.md`. The log is written to `LOG_FILE`.
+
+## How to evaluate
+
+```bash
+python main.py --evaluate
+```
+
+Builds the same results as `python main.py`, then prints a pass or fail report and exits with code 1 if a check fails (DEC-017). It makes the same live OpenAI calls as a normal start. Nothing is served.
+
+- NFR-004: for each job description, at least `EVAL_MIN_RELEVANT_IN_TOP_K` of the `EVAL_TOP_K` best-ranked CVs must be labeled relevant in `EVAL_GROUND_TRUTH_PATH`.
+- NFR-005: at least `EVAL_MIN_DATE_MATCH_PERCENT` percent of the jobs in `EVAL_GOLD_JOBS_PATH` must have a matching start month, end month and current marker in the extracted CV.
+
+The gold file is drafted by an AI assistant from the CV text. NFR-005 counts only after you review it. The report shows counts and job description file names, never CV content. A missing or malformed evaluation file stops the run before any LLM call.
 
 ## How to test
 

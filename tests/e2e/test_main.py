@@ -1,3 +1,4 @@
+import json
 import logging
 from collections.abc import Iterator
 from pathlib import Path
@@ -15,6 +16,7 @@ from src.config import (
     ServerSettings,
     Settings,
 )
+from src.evaluation import EvaluationFileError
 from src.llm_schemas import CvFactsReply, EducationReply, JobReply, RecommendationReply
 from src.pipeline import PipelineServices
 from src.records import Document, YearMonth
@@ -259,3 +261,77 @@ def test_nfr_002_log_file_has_no_api_key(tmp_path, llm, clean_logging):
     log = settings.log.file.read_text(encoding="utf-8")
     assert "Read 2 CVs and 2 job descriptions" in log
     assert API_KEY not in log
+
+
+TRUTH = "job_id\tcv_id\nj1\tann\nj1\tbob\nj2\tbob\nj2\tann\n"
+
+
+def _gold_text(last_start: str = "2022-01") -> str:
+    ann = [
+        {"start": "2018-01", "end": "2019-05", "is_current": False},
+        {"start": "2019-06", "end": "2021-12", "is_current": False},
+        {"start": last_start, "end": None, "is_current": True},
+    ]
+    return json.dumps({"attribution": "Invented", "cvs": {"ann.txt": ann}})
+
+
+class EvalFiles(FakeFiles):
+    """The fake file reader plus the two evaluation files."""
+
+    def __init__(self, gold: str) -> None:
+        self.gold = gold
+
+    def read_text(self, path: Path) -> str:
+        if path == Path("truth.tsv"):
+            return TRUTH
+        if path == Path("gold.json"):
+            return self.gold
+        return super().read_text(path)
+
+
+class CountingLlm(FakeLlm):
+    def __init__(self) -> None:
+        super().__init__()
+        self.calls = 0
+
+    async def complete(self, system: str, user: str, schema: type) -> object:
+        self.calls += 1
+        return await super().complete(system, user, schema)
+
+    async def embed(self, text: str) -> list[float]:
+        self.calls += 1
+        return await super().embed(text)
+
+
+def _evaluate(tmp_path: Path, gold: str, llm: FakeLlm) -> int:
+    services = PipelineServices(EvalFiles(gold), llm, FakeIndex(), FakeIndex())
+    return main.evaluate(_settings(tmp_path), services, TODAY)
+
+
+def test_nfr_004_and_nfr_005_evaluate_exits_0_and_reports_when_checks_pass(tmp_path, llm, capsys):
+    code = _evaluate(tmp_path, _gold_text(), llm)
+
+    output = capsys.readouterr().out
+    assert code == 0
+    assert "NFR-004: PASS" in output
+    assert "NFR-005: PASS" in output
+    assert "3 of 3 gold jobs matched" in output
+    assert "CV of Ann" not in output
+
+
+def test_dec_017_evaluate_exits_1_when_a_check_fails(tmp_path, llm, capsys):
+    code = _evaluate(tmp_path, _gold_text(last_start="2021-12"), llm)
+
+    output = capsys.readouterr().out
+    assert code == 1
+    assert "NFR-004: PASS" in output
+    assert "NFR-005: FAIL" in output
+
+
+def test_dec_017_bad_file_stops_before_any_llm_call(tmp_path):
+    llm = CountingLlm()
+
+    with pytest.raises(EvaluationFileError):
+        _evaluate(tmp_path, "not json", llm)
+
+    assert llm.calls == 0
