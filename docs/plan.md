@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M3** Ports, ranking and vector store | `ports.py`, `ranking.py` and the Chroma `vector_store.py`: similarity order, unscored items last. Installs `chromadb`. | sonnet | high | open |
 | **M4** File reader | `file_reader.py` reads CVs, job descriptions, prompt files and evaluation files; a missing folder or file stops with a clear message. | sonnet | medium | open |
 | **M5** Prompt data and CV extraction | `prompt_data.py`, the CV-facts schema, `extraction.py` and `prompts/extract_cv.md`. Installs `pydantic`. | sonnet | high | open |
 | **M6** Recommendation | `recommendation.py`, the recommendation schema and `prompts/match_cv_to_job.md`; the request carries no name or address. | sonnet | medium | open |
@@ -28,14 +27,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M3 — Ports, ranking and vector store
-
-- **Refs:** RNK-001, JOB-002, CND-003, MIS-002, DEC-004, DEC-011, design section 4 (ports).
-- **Owner:** `src/ports.py`, `src/ranking.py`, `src/vector_store.py`.
-- **Tests first:** `test_rnk_001_nearest_returns_items_by_cosine_similarity`, `test_job_002_all_cvs_returned_best_first_ties_by_file_name`, `test_cnd_003_all_jobs_returned_best_first`, `test_mis_002_item_without_vector_ranked_last_by_id`, `test_dec_004_chroma_telemetry_off`.
-- **Build:** the three protocols and the `LlmError` types; `ranking` appends unscored items by ID; `vector_store` adds vectors by ID and returns every item as (ID, similarity) with in-memory Chroma. Install `chromadb` into `sdd-demo`, pin it in `requirements.txt`, run `python scripts/lock.py`.
-- **Gate:** the checks pass with `chromadb` installed. If the install or the checks fail, set Status to `blocked` (DEC-011, design section 5).
 
 ### M4 — File reader
 
