@@ -9,7 +9,7 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M13** Front end shell and lists | `index.html`, theme, `api.js`, list view, sticky header, file names (DEC-019); first headless-browser tests. Installs `playwright`. | sonnet | high | blocked |
+| **M13** Front end shell and lists | `index.html`, theme, `api.js`, list view, sticky header, file names (DEC-019); first headless-browser tests. Installs `playwright`. | sonnet | high | approved |
 | **M14** Job view | Job text panel and foldable ranked candidate cards with recommendation and attributes (DEC-020). | sonnet | medium | open |
 | **M15** Candidate view | Raw CV, attributes and ranked job descriptions. | sonnet | medium | open |
 | **M16** Failure and unavailable states | Failure panel, "Not available" values, and "Present" against unknown end (DEC-015). | sonnet | medium | open |
@@ -35,6 +35,7 @@ history is the record. Template: `docs/workflow.md`.
   - To continue, approve one of these:
     1. Edit `eslint.config.js` to change only the two `files` globs, `src/api.js` to `src/web/js/api.js` and `src/log.js` to `src/web/js/log.js`, and edit `.stylelintrc.json` to add one rule `selector-class-pattern` set to the BEM pattern (lower-case kebab-case blocks, `__element` and `--modifier`). No other rule changes.
     2. Change `docs/design.md` and `.claude/rules/` so that `api.js` and `log.js` sit at `src/api.js` and `src/log.js`, and approve only the Stylelint BEM rule from option 1.
+- **Approval:** Option 1. Edit `eslint.config.js` to change only the two `files` globs (`src/api.js` to `src/web/js/api.js`, `src/log.js` to `src/web/js/log.js`), and edit `.stylelintrc.json` to add one rule `selector-class-pattern` set to the BEM pattern (lower-case kebab-case blocks, `__element` and `--modifier`). No other rule changes.
 
 ### M14 — Job view
 
