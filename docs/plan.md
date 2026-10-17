@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M4** File reader | `file_reader.py` reads CVs, job descriptions, prompt files and evaluation files; a missing folder or file stops with a clear message. | sonnet | medium | open |
 | **M5** Prompt data and CV extraction | `prompt_data.py`, the CV-facts schema, `extraction.py` and `prompts/extract_cv.md`. Installs `pydantic`. | sonnet | high | open |
 | **M6** Recommendation | `recommendation.py`, the recommendation schema and `prompts/match_cv_to_job.md`; the request carries no name or address. | sonnet | medium | open |
 | **M7** Settings | `config.py`, `config/.env.example` and `config/.env` with every key in design 2.3; a missing value fails at start-up. | sonnet | medium | open |
@@ -27,14 +26,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M4 — File reader
-
-- **Refs:** EXT-001, JOB-001, DEC-009, DEC-017 (reading only).
-- **Owner:** `src/file_reader.py`.
-- **Tests first:** `test_ext_001_reads_each_cv_file_in_folder`, `test_job_001_reads_each_job_description_file_in_folder`, `test_ext_001_missing_folder_stops_with_clear_message`, `test_dec_017_reads_prompt_and_evaluation_files_as_text`.
-- **Build:** read plain-text files from a folder into `Document` records (ID = file name, sorted by name); read one prompt file or evaluation file as text; fail clearly on a missing path.
-- **Gate:** the tests use temporary folders and invented data only; the checks pass.
 
 ### M5 — Prompt data and CV extraction
 
