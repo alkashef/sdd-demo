@@ -1,5 +1,5 @@
 /* The content of a job view: the heading, the text panel, the candidate cards and their parts
-   (facts, chips, stats, recommendation pill, score bar). It styles no page shell (layout.css). */
+   (facts, chips, stats, recommendation pill, score bar) and the failure panel. It styles no page shell (layout.css). */
 
 .job-view {
   display: flex;
@@ -203,6 +203,11 @@
   color: var(--coral-ink);
 }
 
+.pill--unavailable {
+  background: var(--neutral-bg);
+  color: var(--neutral-ink);
+}
+
 .fields {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -349,4 +354,50 @@
   color: var(--primary);
   font-size: var(--font-size-score);
   font-weight: 700;
+}
+
+.failure-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--gutter);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--sun-line);
+  border-radius: var(--radius-card);
+  background: var(--sun-bg);
+  color: var(--sun-ink);
+}
+
+.failure-panel[hidden] {
+  display: none;
+}
+
+.failure-panel__message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin: 0;
+  font-weight: 700;
+}
+
+.failure-panel__icon {
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.failure-panel__summary {
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.failure-panel__list {
+  margin: var(--space-3) 0 0;
+  padding-left: var(--space-5);
+  font-size: var(--font-size-meta);
+  line-height: 1.7;
 }

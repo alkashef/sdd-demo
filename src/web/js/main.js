@@ -2,12 +2,13 @@
 /**
  * @module main
  * The entry point of the page: it connects the modules and shows any unexpected error with its
- * stack trace. It holds no other logic. Implements LST-001, LST-002, JOB-002, JOB-003, CND-001 to CND-003, DEC-002 and DEC-019.
+ * stack trace. It holds no other logic. Implements LST-001, LST-002, JOB-002, JOB-003, CND-001 to CND-003, ERR-001, DEC-002 and DEC-019.
  */
 
 import { createApi } from "./api.js";
 import { config } from "./config.js";
 import { showCandidate } from "./candidate-view.js";
+import { showFailures } from "./failures-view.js";
 import { showJob, showJobLoading } from "./job-view.js";
 import { ITEM_KINDS, SELECTION_EVENT, showCounts, showLists, watchSelection } from "./list-view.js";
 import { createLogger } from "./log.js";
@@ -107,6 +108,11 @@ async function start() {
   const [jobs, candidates] = await Promise.all([api.listJobs(), api.listCandidates()]);
   showLists(nav, template, jobs, candidates);
   showCounts(counts, candidates.length, jobs.length);
+  showFailures(
+    /** @type {HTMLElement} */ (document.querySelector("[data-failures]")),
+    templateById("failure-item-template"),
+    await api.listFailures(),
+  );
   watchSelection(nav);
   watchSelections(api, nav);
   log.info(`Loaded ${jobs.length} job descriptions and ${candidates.length} candidates`);

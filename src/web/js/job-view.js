@@ -2,12 +2,12 @@
 /**
  * @module job-view
  * Owns the job view: the heading, the "Job description text" panel and one foldable card per
- * ranked candidate (JOB-002, JOB-003, RNK-003, REC-001, DEC-019, DEC-020). It does not load data
+ * ranked candidate (JOB-002, JOB-003, RNK-003, REC-001, ERR-002, DEC-019, DEC-020). It does not load data
  * (`api.js`) and fills the attribute parts with `attribute-fill.js`.
  */
 
 import { fillAttributes } from "./attribute-fill.js";
-import { formatScore, scorePercent } from "./format.js";
+import { NOT_AVAILABLE, formatScore, scorePercent } from "./format.js";
 
 /**
  * @typedef {{
@@ -32,14 +32,26 @@ function part(parent, selector) {
 }
 
 /**
- * Show the recommendation row: the pill and the reason (REC-001).
+ * @param {HTMLElement} row The recommendation row.
+ */
+function showUnavailableRecommendation(row) {
+  const pill = part(row, "[data-pill]");
+  pill.classList.add("pill--unavailable");
+  part(pill, "[data-pill-label]").textContent = NOT_AVAILABLE;
+  pill.querySelectorAll("svg").forEach((icon) => icon.remove());
+  part(row, "[data-reason]").textContent = "The recommendation could not be generated.";
+}
+
+/**
+ * Show the recommendation row: the pill and the reason (REC-001). A missing recommendation shows
+ * the grey "Not available" pill (ERR-002).
  * @param {HTMLElement} card The card element.
  * @param {import("./api.js").Recommendation | null} recommendation The advice, or none.
  */
 function fillRecommendation(card, recommendation) {
   const row = part(card, "[data-recommendation]");
-  row.hidden = recommendation === null;
   if (recommendation === null) {
+    showUnavailableRecommendation(row);
     return;
   }
   const kind = recommendation.interview ? "interview" : "skip";

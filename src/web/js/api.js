@@ -46,9 +46,11 @@
  *   extracted: ExtractedAttributes | null,
  *   calculated: CalculatedAttributes | null,
  * }} CandidateDetail A candidate with the raw CV and the attributes (CND-001, CND-002).
+ * @typedef {{ item_id: string, cause: string }} Failure A failed LLM call (ERR-001).
  * @typedef {{ id: string, title: string, score: number | null }} RankedJob A job description in
  *   the ranking of one candidate, without a recommendation (CND-003).
- * @typedef {{ jobs: string, candidates: string, rankedCandidates: string, rankedJobs: string }}
+ * @typedef {{ jobs: string, candidates: string, rankedCandidates: string, rankedJobs: string,
+ *   failures: string }}
  *   ApiPaths The paths of the endpoints. `rankedCandidates` is the segment that follows a job
  *   path, `rankedJobs` the one that follows a candidate path.
  * @typedef {{
@@ -58,6 +60,7 @@
  *   listRankedCandidates: (jobId: string) => Promise<RankedCandidate[]>,
  *   getCandidate: (candidateId: string) => Promise<CandidateDetail>,
  *   listRankedJobs: (candidateId: string) => Promise<RankedJob[]>,
+ *   listFailures: () => Promise<Failure[]>,
  * }} Api
  */
 
@@ -113,5 +116,6 @@ export function createApi(paths, fetchFn = fetch) {
     listRankedCandidates: (jobId) => get(`${job(jobId)}/${paths.rankedCandidates}`),
     getCandidate: (candidateId) => get(candidate(candidateId)),
     listRankedJobs: (candidateId) => get(`${candidate(candidateId)}/${paths.rankedJobs}`),
+    listFailures: () => get(paths.failures),
   };
 }

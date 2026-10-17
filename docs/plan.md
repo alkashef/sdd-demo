@@ -9,20 +9,11 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M16** Failure and unavailable states | Failure panel, "Not available" values, and "Present" against unknown end (DEC-015). | sonnet | medium | open |
 | **M17** Evaluation | `evaluation.py` and `main.py --evaluate` for NFR-004 and NFR-005; `.gitignore` exception so `gold_jobs.json` is committed (DEC-017). | sonnet | high | open |
 | **M18** Sample build script | `scripts/build_sample.py` rebuilds `data/sample/` from the raw TalentCLEF files (DEC-010). | sonnet | medium | open |
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M16 — Failure and unavailable states
-
-- **Refs:** ERR-001, ERR-002, MIS-001, MIS-002, DEC-015.
-- **Owner:** `src/web/js/failures-view.js` (and the job and candidate views).
-- **Tests first:** `test_err_001_ui_failure_panel_names_the_cause`, `test_err_002_ui_keeps_lists_and_raw_texts_when_calls_failed`, `test_mis_001_ui_shows_not_available_for_missing_value`, `test_mis_002_ui_candidate_without_name_stays_listed_by_file_name`, `test_dec_015_ui_unknown_end_shows_not_available_not_present`, `test_dec_015_ui_current_job_shows_present`.
-- **Build:** the amber failure panel and the failure list, the grey "Not available" recommendation pill, and the end-date rule for the last job.
-- **Gate:** the checks pass; the page matches `docs/frontend/job-view-service-unavailable.dc.html`.
 
 ### M17 — Evaluation
 

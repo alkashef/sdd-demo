@@ -12,5 +12,6 @@ export const config = Object.freeze({
     candidates: "/api/candidates",
     rankedCandidates: "ranked-candidates",
     rankedJobs: "ranked-jobs",
+    failures: "/api/failures",
   }),
 });

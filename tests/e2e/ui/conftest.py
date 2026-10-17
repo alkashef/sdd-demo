@@ -13,6 +13,7 @@ from src.records import (
     CalculatedAttributes,
     CvFacts,
     Document,
+    Failure,
     Job,
     Recommendation,
     Workspace,
@@ -54,19 +55,49 @@ def _fake_workspace() -> Workspace:
     )
 
 
-@pytest.fixture(scope="session")
-def base_url() -> Iterator[str]:
-    """Serve the real front end over a fake workspace on a free port of 127.0.0.1."""
+def _failed_workspace() -> Workspace:
+    """Two CVs and a job where the LLM failed: one CV has no facts, one has no name or end date."""
+    unknown_end = Job("Clerk", "Beta", None, None, YearMonth(2018, 1), None, False, "Filing")
+    nameless = CvFacts(None, "Clerk", [], None, None, None, [unknown_end], [])
+    return Workspace(
+        cvs=[Document("cv00.txt", "Raw text zero"), Document("cv01.txt", "Raw text one")],
+        jobs=[Document("j1.txt", "Data Analyst\nWe need numbers.")],
+        facts={"cv01.txt": nameless},
+        attributes={},
+        ranked_candidates={"j1.txt": [("cv00.txt", 0.8), ("cv01.txt", 0.7)]},
+        ranked_jobs={"cv00.txt": [("j1.txt", 0.8)], "cv01.txt": [("j1.txt", 0.7)]},
+        recommendations={},
+        failures=[
+            Failure("cv00.txt", "extraction failed, request timed out"),
+            Failure("j1.txt + cv00.txt", "recommendation failed, request timed out"),
+        ],
+    )
+
+
+def _serve(workspace: Workspace) -> Iterator[str]:
+    """Serve the real front end over this workspace on a free port of 127.0.0.1."""
     listener = socket.socket()
     listener.bind(("127.0.0.1", 0))
     listener.listen()
-    server = uvicorn.Server(uvicorn.Config(create_app(_fake_workspace(), WEB_ROOT)))
+    server = uvicorn.Server(uvicorn.Config(create_app(workspace, WEB_ROOT)))
     thread = threading.Thread(target=server.run, kwargs={"sockets": [listener]}, daemon=True)
     thread.start()
     yield f"http://127.0.0.1:{listener.getsockname()[1]}"
     server.should_exit = True
     thread.join()
     listener.close()
+
+
+@pytest.fixture(scope="session")
+def base_url() -> Iterator[str]:
+    """Serve the real front end over a fake workspace."""
+    yield from _serve(_fake_workspace())
+
+
+@pytest.fixture(scope="session")
+def failed_base_url() -> Iterator[str]:
+    """Serve the real front end over a workspace with failed LLM calls."""
+    yield from _serve(_failed_workspace())
 
 
 @pytest.fixture(scope="module")
@@ -96,5 +127,14 @@ def page(browser: Browser, base_url: str) -> Iterator[Page]:
     """A fresh page on the app's start URL, 1280 by 720."""
     page = browser.new_page(viewport={"width": 1280, "height": 720})
     page.goto(base_url)
+    yield page
+    page.close()
+
+
+@pytest.fixture
+def failed_page(browser: Browser, failed_base_url: str) -> Iterator[Page]:
+    """A fresh page on the start URL of the workspace with failed LLM calls."""
+    page = browser.new_page(viewport={"width": 1280, "height": 720})
+    page.goto(failed_base_url)
     yield page
     page.close()

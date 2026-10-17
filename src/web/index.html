@@ -44,6 +44,28 @@
 
         <main class="main" data-main>
           <pre class="error-panel" role="alert" hidden data-error-panel></pre>
+          <section class="failure-panel" role="alert" hidden data-failures>
+            <p class="failure-panel__message">
+              <svg
+                class="failure-panel__icon"
+                aria-hidden="true"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+              >
+                <path d="M10 3l8 14H2L10 3z" />
+                <path d="M10 8v4M10 14.5v.5" />
+              </svg>
+              <span>
+                The OpenAI service failed for some items. Rankings and raw texts are shown. The
+                results that failed are not available.
+              </span>
+            </p>
+            <details open>
+              <summary class="failure-panel__summary" data-summary></summary>
+              <ul class="failure-panel__list" data-failure-list></ul>
+            </details>
+          </section>
           <div class="main__view" data-view>
             <h1 class="main__title">Match CVs to job descriptions</h1>
             <p class="main__hint">
@@ -183,6 +205,10 @@
           <div class="stats" data-stats></div>
         </div>
       </details>
+    </template>
+
+    <template id="failure-item-template">
+      <li><strong data-item></strong>: <span data-cause></span></li>
     </template>
 
     <template id="fact-template">
