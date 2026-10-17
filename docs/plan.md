@@ -9,18 +9,9 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M18** Sample build script | `scripts/build_sample.py` rebuilds `data/sample/` from the raw TalentCLEF files (DEC-010). | sonnet | medium | open |
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M18 — Sample build script
-
-- **Refs:** DEC-010, spec section 1 (sample).
-- **Owner:** `scripts/build_sample.py`.
-- **Tests first:** `test_dec_010_builds_selected_jobs_and_cvs_into_output_folder`, `test_dec_010_each_job_has_at_least_three_labeled_cvs`, `test_dec_010_writes_ground_truth_for_selected_pairs`, `test_dec_010_raw_files_are_not_modified`.
-- **Build:** a script that takes the raw folder, the output folder and the selected IDs as arguments and writes `job_descriptions/`, `cvs/`, `ground_truth.tsv` and `ATTRIBUTION.txt`. Tests use invented raw data.
-- **Gate:** the checks pass; run in a scratch folder with the current sample IDs, it reproduces the files in `data/sample/` (compare, then delete the scratch folder).
 
 ### M19 — CI workflow
 
