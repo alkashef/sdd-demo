@@ -2,7 +2,7 @@
 
 ## Project
 
-- Purpose: CV Matcher
+- Purpose: An app that takes a folder of CVs/resumes in plain-text format and extracts information from each one. The user enters a search criteria. The app finds and ranks the best matching CVs. The search must be intelligent and semantic, not only keyword matching. This is a demo light-weight app.
 - Stack: Python 3.12, conda environment `sdd-demo`, pytest, ruff, mypy
 - Test command: python -m pytest --cov=src --cov-branch --cov-fail-under=80
 - Run command: python main.py
@@ -78,9 +78,10 @@ End every task that changes files with this report, one line per item:
 | `data/` | Input and runtime data. |
 | `content/`, `site/` | Static site: Markdown source (authors edit only this) and generated output (committed, never edited by hand). |
 | `models/`, `prompts/` | Downloaded model weights (never committed; path from config) and LLM prompt files. |
-| `scripts/` | Setup, download, and maintenance scripts: `cleanup.py`, `check.py` (the checks the hooks run), `milestones-runner.py` (runs the plan unattended), `download_models.py`, `download_assets.py`. |
+| `scripts/` | Setup, download, and maintenance scripts: `cleanup.py`, `check.py` (the checks the hooks run), `milestones-runner.py` (runs the plan unattended), `lock.py` (regenerates `constraints.txt`), `download_models.py`, `download_assets.py`. |
 | `.vscode/`, `.claude/` | Shared editor settings and Claude Code settings. |
-| Root | `CLAUDE.md`, `README.md`, `requirements.txt`, `.gitignore`, `main.py` (Python entry point), `Dockerfile`, `compose.yaml`, `.dockerignore` (Docker), and the tool configs: `ruff.toml`, `mypy.ini`, `pytest.ini` (Python), `package.json`, `tsconfig.json`, `eslint.config.js` (JavaScript). |
+| `.github/` | GitHub Actions workflow that runs the project checks. |
+| Root | `CLAUDE.md`, `README.md`, `requirements.txt`, `constraints.txt`, `.gitignore`, `main.py` (Python entry point), `Dockerfile`, `compose.yaml`, `.dockerignore` (Docker), and the tool configs: `ruff.toml`, `mypy.ini`, `pytest.ini` (Python), `package.json`, `tsconfig.json`, `eslint.config.js` (JavaScript). |
 
 - All source code lives under `src/`, except the entry point `main.py`. Create a folder only when
   the layout in `docs/design.md` lists it, and update the layout in the same change.
@@ -116,6 +117,9 @@ End every task that changes files with this report, one line per item:
 - List direct dependencies only, pinned to the version installed when added (`==` in
   `requirements.txt`, exact versions in `package.json`). Do not use `pip freeze`. Use only APIs that
   exist in the pinned version.
+- `constraints.txt` is a generated full pin list of every installed package. `python scripts/lock.py`
+  regenerates it, and it is never edited by hand. Regenerate it in the same change that edits
+  `requirements.txt`. `requirements.txt` stays direct-only (the `pip freeze` ban applies to that file).
 
 ## Testing
 
