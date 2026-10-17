@@ -9,7 +9,7 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M13** Front end shell and lists | `index.html`, theme, `api.js`, list view, sticky header, file names (DEC-019); first headless-browser tests. Installs `playwright`. | sonnet | high | open |
+| **M13** Front end shell and lists | `index.html`, theme, `api.js`, list view, sticky header, file names (DEC-019); first headless-browser tests. Installs `playwright`. | sonnet | high | blocked |
 | **M14** Job view | Job text panel and foldable ranked candidate cards with recommendation and attributes (DEC-020). | sonnet | medium | open |
 | **M15** Candidate view | Raw CV, attributes and ranked job descriptions. | sonnet | medium | open |
 | **M16** Failure and unavailable states | Failure panel, "Not available" values, and "Present" against unknown end (DEC-015). | sonnet | medium | open |
@@ -26,6 +26,15 @@ history is the record. Template: `docs/workflow.md`.
 - **Tests first:** `test_lst_001_ui_lists_job_descriptions`, `test_lst_002_ui_lists_candidates`, `test_dec_019_ui_header_stays_at_top_when_page_scrolls`, `test_dec_019_ui_file_name_sits_below_name_in_smaller_size`, `format.test.js` for the score and "Not available" formatting.
 - **Build:** the page structure and tokens from `docs/frontend/README.md`, the navigation with both lists, the sticky header, data only through `api.js`. Install `playwright` (uses the installed Edge or Chrome), pin it, run `python scripts/lock.py`.
 - **Gate:** the checks pass, including ESLint, tsc, Prettier, Stylelint and `node --test`. If no Edge or Chrome is found, set Status to `blocked`.
+- **Blocked:** The milestone needs edits to two check configs that `.claude/settings.json` puts under "ask", and no Approval entry permits them.
+  - `eslint.config.js` lines 49-50 exempt `src/api.js` from the `fetch` ban and `src/log.js` from the `console` ban. Design section 2.2 puts the files at `src/web/js/api.js` and `src/web/js/log.js`, so the exemptions do not match. `npm run lint` reports `no-restricted-globals` on `fetch` in `api.js` and `no-console` in `log.js` (`.claude/rules/javascript.md` requires `fetch` only in `api.js` and `console` only in `log.js`).
+  - `.stylelintrc.json` extends `stylelint-config-standard`, whose `selector-class-pattern` rejects BEM names: `.nav-item__label` fails with "Expected class selector to be kebab-case". `.claude/rules/html-css.md` requires BEM (`block__element--modifier`).
+  - `.claude/rules/code-quality.md`: editing the check configs asks the user first. `Edit(/eslint.config.js)` and `Edit(/.stylelintrc.json)` are in the "ask" list of `.claude/settings.json`.
+  - Workarounds such as `globalThis.fetch` or non-BEM class names would sidestep the rules, so none was used.
+  - Nothing else was changed. The work done so far (the `playwright` install, the tests, `src/web/`) was discarded. `playwright` 1.64.0 stays installed in the `sdd-demo` environment, and Edge and Chrome were found, so that part of the gate is met.
+  - To continue, approve one of these:
+    1. Edit `eslint.config.js` to change only the two `files` globs, `src/api.js` to `src/web/js/api.js` and `src/log.js` to `src/web/js/log.js`, and edit `.stylelintrc.json` to add one rule `selector-class-pattern` set to the BEM pattern (lower-case kebab-case blocks, `__element` and `--modifier`). No other rule changes.
+    2. Change `docs/design.md` and `.claude/rules/` so that `api.js` and `log.js` sit at `src/api.js` and `src/log.js`, and approve only the Stylelint BEM rule from option 1.
 
 ### M14 — Job view
 
