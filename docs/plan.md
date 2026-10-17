@@ -9,7 +9,7 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M1** Lock script and lock check | `scripts/lock.py` writes `constraints.txt`; `check.py` fails if a `requirements.txt` pin is missing from it or differs (DEC-018). | sonnet | medium | open |
+| **M1** Lock script and lock check | `scripts/lock.py` writes `constraints.txt`; `check.py` fails if a `requirements.txt` pin is missing from it or differs (DEC-018). | sonnet | medium | blocked |
 | **M2** Records and attribute calculations | `records.py` and `attributes.py`: every CAL rule and the EXT-007 to EXT-009 derivations, proved with EX-001 to EX-004. | sonnet | high | open |
 | **M3** Ports, ranking and vector store | `ports.py`, `ranking.py` and the Chroma `vector_store.py`: similarity order, unscored items last. Installs `chromadb`. | sonnet | high | open |
 | **M4** File reader | `file_reader.py` reads CVs, job descriptions, prompt files and evaluation files; a missing folder or file stops with a clear message. | sonnet | medium | open |
@@ -38,6 +38,11 @@ history is the record. Template: `docs/workflow.md`.
 - **Tests first:** `test_dec_018_lock_check_passes_when_pins_match`, `test_dec_018_lock_check_fails_when_pin_missing`, `test_dec_018_lock_check_fails_when_version_differs`, `test_dec_018_lock_writes_freeze_output_to_constraints` (fake freeze runner).
 - **Build:** `lock.py` wraps `pip freeze` and writes `constraints.txt`; `check.py` gains the check that every `requirements.txt` pin appears in `constraints.txt` with the same version. Run `lock.py` once in the `sdd-demo` environment and commit `constraints.txt`.
 - **Gate:** the checks in `CLAUDE.md` pass; `constraints.txt` exists and matches `requirements.txt`.
+- **Blocked:** M1 must edit `scripts/check.py`, and the edit was denied (permission not granted) in this unattended run.
+  - `scripts/check.py` is the file the hooks run; `.claude/rules/code-quality.md` says editing the check configs or hook files asks the user first. The Build line of M1 names this edit, but the block has no Approval entry.
+  - Nothing else was changed. The new `scripts/lock.py` and `tests/unit/test_lock.py` were removed again. To continue, approve one of these:
+    1. Edit `scripts/check.py` to add the lock check (a `lock_problems` function and one call in `check_all`), and nothing else in that file.
+    2. Approve the edit, and move the lock check into a new `scripts/lock_check.py` that `check.py` calls (still needs a one-line edit to `check.py`).
 
 ### M2 — Records and attribute calculations
 
