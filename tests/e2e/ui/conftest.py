@@ -9,7 +9,15 @@ from playwright.sync_api import Browser, Page, Playwright, sync_playwright
 from playwright.sync_api import Error as PlaywrightError
 
 from src.api.app import create_app
-from src.records import CalculatedAttributes, CvFacts, Document, Job, Workspace, YearMonth
+from src.records import (
+    CalculatedAttributes,
+    CvFacts,
+    Document,
+    Job,
+    Recommendation,
+    Workspace,
+    YearMonth,
+)
 
 WEB_ROOT = Path(__file__).resolve().parents[3] / "src" / "web"
 BROWSER_CHANNELS = ("msedge", "chrome")
@@ -33,9 +41,15 @@ def _fake_workspace() -> Workspace:
         ],
         facts={doc_id: _facts(f"Candidate {doc_id[2:4]}") for doc_id in ids},
         attributes={doc_id: attributes for doc_id in ids},
-        ranked_candidates={"j1.txt": [(doc_id, 0.5) for doc_id in ids]},
+        ranked_candidates={
+            "j1.txt": [(doc_id, 0.9 - index / 100) for index, doc_id in enumerate(ids)],
+            "j2.txt": [],
+        },
         ranked_jobs={doc_id: [("j1.txt", 0.5)] for doc_id in ids},
-        recommendations={},
+        recommendations={
+            ("j1.txt", ids[0]): Recommendation(True, "Strong fit for the role."),
+            ("j1.txt", ids[1]): Recommendation(False, "No analytics experience."),
+        },
         failures=[],
     )
 

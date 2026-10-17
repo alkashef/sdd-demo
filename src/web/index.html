@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/detail.css" />
     <script type="module" src="js/main.js"></script>
   </head>
   <body>
@@ -43,11 +44,13 @@
 
         <main class="main" data-main>
           <pre class="error-panel" role="alert" hidden data-error-panel></pre>
-          <h1 class="main__title">Match CVs to job descriptions</h1>
-          <p class="main__hint">
-            Select a job description to see its candidates, best match first. Select a candidate to
-            see the CV and the best-matching job descriptions.
-          </p>
+          <div class="main__view" data-view>
+            <h1 class="main__title">Match CVs to job descriptions</h1>
+            <p class="main__hint">
+              Select a job description to see its candidates, best match first. Select a candidate
+              to see the CV and the best-matching job descriptions.
+            </p>
+          </div>
         </main>
       </div>
 
@@ -69,6 +72,86 @@
           <span class="nav-item__file"></span>
         </button>
       </li>
+    </template>
+
+    <template id="job-view-template">
+      <article class="job-view">
+        <header class="job-view__head">
+          <h1 class="main__title" data-title></h1>
+          <p class="job-view__file" data-file></p>
+          <p class="job-view__meta" data-meta></p>
+        </header>
+        <details class="panel job-view__text" open>
+          <summary class="panel__title">Job description text</summary>
+          <div class="doc" data-text></div>
+        </details>
+        <div class="job-view__cards" data-cards></div>
+      </article>
+    </template>
+
+    <template id="candidate-card-template">
+      <details class="candidate-card" open>
+        <summary class="candidate-card__summary" title="Fold or unfold this candidate">
+          <svg
+            class="candidate-card__chevron"
+            aria-hidden="true"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+          >
+            <path d="M6 3l5 5-5 5" />
+          </svg>
+          <span class="candidate-card__rank" data-rank></span>
+          <span class="candidate-card__who">
+            <span class="candidate-card__name" data-name></span>
+            <span class="candidate-card__file" data-file></span>
+          </span>
+          <span class="candidate-card__match">
+            <span class="candidate-card__score-line">
+              <span class="candidate-card__score" data-score></span>
+              <span class="candidate-card__score-unit">match</span>
+            </span>
+            <span class="score-bar"><span class="score-bar__fill" data-bar></span></span>
+          </span>
+        </summary>
+        <div class="candidate-card__body">
+          <div class="candidate-card__recommendation" data-recommendation>
+            <span class="pill" data-pill>
+              <svg
+                aria-hidden="true"
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                data-icon="interview"
+              >
+                <path d="M2.5 7.5l3 3 6-7" />
+              </svg>
+              <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" data-icon="skip">
+                <path d="M3 3l8 8M11 3l-8 8" />
+              </svg>
+              <span data-pill-label></span>
+            </span>
+            <p class="candidate-card__reason" data-reason></p>
+          </div>
+          <div class="fields" data-facts></div>
+          <div class="chips" data-chips></div>
+          <div class="stats" data-stats></div>
+        </div>
+      </details>
+    </template>
+
+    <template id="fact-template">
+      <div class="field">
+        <div class="field__label" data-label></div>
+        <div class="field__value" data-value></div>
+      </div>
+    </template>
+
+    <template id="stat-template">
+      <div class="stat">
+        <div class="stat__label" data-label></div>
+        <div class="stat__value" data-value></div>
+      </div>
     </template>
   </body>
 </html>

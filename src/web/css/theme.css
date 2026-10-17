@@ -43,4 +43,14 @@
   --nav-width: 260px;
   --page-max-width: 1440px;
   --main-min-width: 560px;
+  --doc-max-height: 200px;
+  --radius-inset: 12px;
+  --radius-pill: 999px;
+  --font-size-name: 17px;
+  --font-size-score: 22px;
+  --font-size-stat: 16px;
+  --card-gap: 16px;
+  --bar-width: 130px;
+  --bar-height: 6px;
+  --rank-size: 36px;
 }

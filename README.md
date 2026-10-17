@@ -4,7 +4,7 @@
 
 CV Matcher reads a folder of plain-text CVs and a folder of plain-text job descriptions. At start-up it extracts facts from each CV with an LLM, calculates attributes from them (employment period, gaps, time since graduation), ranks the CVs for each job description (and the job descriptions for each CV) by embedding similarity, and asks the LLM for one interview recommendation per pair. It then serves the results as a JSON API on `127.0.0.1`. Requirements: `docs/spec.md`. Design: `docs/design.md`.
 
-The browser page that shows the results is not built yet (`src/web/` does not exist), so `python main.py` stops at start-up until it is.
+The browser page (`src/web/`) lists the job descriptions and candidates. Selecting a job description shows its text and the ranked candidates as foldable cards, each with the interview recommendation and the extracted and calculated attributes. The candidate view is not built yet.
 
 ## Stack
 

@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M14** Job view | Job text panel and foldable ranked candidate cards with recommendation and attributes (DEC-020). | sonnet | medium | open |
 | **M15** Candidate view | Raw CV, attributes and ranked job descriptions. | sonnet | medium | open |
 | **M16** Failure and unavailable states | Failure panel, "Not available" values, and "Present" against unknown end (DEC-015). | sonnet | medium | open |
 | **M17** Evaluation | `evaluation.py` and `main.py --evaluate` for NFR-004 and NFR-005; `.gitignore` exception so `gold_jobs.json` is committed (DEC-017). | sonnet | high | open |
@@ -17,14 +16,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M14 — Job view
-
-- **Refs:** JOB-002, JOB-003, RNK-003, REC-001, MIS-001, DEC-019, DEC-020.
-- **Owner:** `src/web/js/job-view.js`, `src/web/js/attribute-fill.js`, `src/web/css/detail.css`.
-- **Tests first:** `test_job_002_ui_selecting_job_shows_ranked_candidates_best_first`, `test_job_003_ui_job_text_panel_sits_above_the_cards`, `test_rnk_003_ui_card_shows_extracted_and_calculated_attributes`, `test_rec_001_ui_card_shows_recommendation_pill_and_reason`, `test_dec_019_ui_card_folds_to_its_summary_line`.
-- **Build:** the job view per `docs/frontend/README.md`: heading, the "Job description text" `<details open>` panel, one foldable card per candidate.
-- **Gate:** the checks pass; the page matches the approved mockups in `docs/frontend/`.
 
 ### M15 — Candidate view
 

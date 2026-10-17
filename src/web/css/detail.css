@@ -1,0 +1,256 @@
+/* The content of a job view: the heading, the text panel, the candidate cards and their parts
+   (facts, chips, stats, recommendation pill, score bar). It styles no page shell (layout.css). */
+
+.job-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gutter);
+}
+
+.job-view__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.job-view__file {
+  color: var(--muted);
+  font-size: var(--font-size-small);
+}
+
+.job-view__meta {
+  padding-top: var(--space-3);
+  color: var(--muted);
+}
+
+.job-view__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.panel,
+.candidate-card {
+  padding: var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+
+.panel__title {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.doc {
+  max-height: var(--doc-max-height);
+  margin-top: var(--space-4);
+  padding: var(--space-4) var(--card-gap);
+  overflow: auto;
+  border-radius: var(--radius-inset);
+  background: var(--bg);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.candidate-card__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  list-style: none;
+  cursor: pointer;
+}
+
+.candidate-card__summary::-webkit-details-marker {
+  display: none;
+}
+
+.candidate-card__chevron {
+  flex: 0 0 auto;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.candidate-card[open] .candidate-card__chevron {
+  transform: rotate(90deg);
+}
+
+.candidate-card__rank {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--rank-size);
+  height: var(--rank-size);
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.candidate-card__who {
+  display: flex;
+  flex: 1 1 180px;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.candidate-card__name {
+  font-size: var(--font-size-name);
+  font-weight: 700;
+}
+
+.candidate-card__file {
+  color: var(--muted);
+  font-size: var(--font-size-small);
+}
+
+.candidate-card__match {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.candidate-card__score-line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.candidate-card__score {
+  color: var(--primary);
+  font-size: var(--font-size-score);
+  font-weight: 700;
+}
+
+.candidate-card__score-unit {
+  color: var(--muted);
+  font-size: var(--font-size-label);
+}
+
+.score-bar {
+  display: block;
+  width: var(--bar-width);
+  height: var(--bar-height);
+  border-radius: var(--bar-height);
+  background: var(--track);
+}
+
+.score-bar__fill {
+  display: block;
+  width: var(--score, 0%);
+  height: var(--bar-height);
+  border-radius: var(--bar-height);
+  background: var(--mint);
+}
+
+.candidate-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-gap);
+  margin-top: var(--card-gap);
+}
+
+.candidate-card__recommendation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-inset);
+  background: var(--bg);
+}
+
+.candidate-card__recommendation[hidden] {
+  display: none;
+}
+
+.candidate-card__reason {
+  flex: 1 1 280px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-size-meta);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pill svg {
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pill--interview {
+  background: var(--mint-bg);
+  color: var(--mint-ink);
+}
+
+.pill--skip {
+  background: var(--coral-bg);
+  color: var(--coral-ink);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4) var(--gutter);
+}
+
+.field__label {
+  color: var(--muted);
+  font-size: var(--font-size-label);
+  font-weight: 700;
+  letter-spacing: var(--label-tracking);
+  text-transform: uppercase;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--tint);
+  color: var(--chip-ink);
+  font-size: var(--font-size-meta);
+  font-weight: 600;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.stat__label {
+  color: var(--muted);
+  font-size: var(--font-size-small);
+}
+
+.stat__value {
+  font-size: var(--font-size-stat);
+  font-weight: 600;
+}
+
+.not-available {
+  color: var(--muted);
+  font-style: italic;
+}

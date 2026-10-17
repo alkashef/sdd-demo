@@ -8,7 +8,11 @@ import { test } from "node:test";
 
 import { createApi } from "../../src/web/js/api.js";
 
-const paths = { jobs: "/api/jobs", candidates: "/api/candidates" };
+const paths = {
+  jobs: "/api/jobs",
+  candidates: "/api/candidates",
+  rankedCandidates: "ranked-candidates",
+};
 
 /**
  * @param {number} status The HTTP status to answer.
@@ -43,4 +47,32 @@ test("an error status becomes an error that names the path and keeps its cause",
     assert.match(String(error.cause), /GET \/api\/jobs answered 500/);
     return true;
   });
+});
+
+test("job_003 getJob asks for the job path and returns the document", async () => {
+  /** @type {string[]} */
+  const asked = [];
+  /** @type {typeof fetch} */
+  const recording = async (input) => {
+    asked.push(String(input));
+    return new Response(JSON.stringify({ id: "a b.txt", title: "T", text: "X" }));
+  };
+  assert.deepEqual(await createApi(paths, recording).getJob("a b.txt"), {
+    id: "a b.txt",
+    title: "T",
+    text: "X",
+  });
+  assert.deepEqual(asked, ["/api/jobs/a%20b.txt"]);
+});
+
+test("job_002 listRankedCandidates asks for the ranking path and returns the list", async () => {
+  /** @type {string[]} */
+  const asked = [];
+  /** @type {typeof fetch} */
+  const recording = async (input) => {
+    asked.push(String(input));
+    return new Response("[]");
+  };
+  assert.deepEqual(await createApi(paths, recording).listRankedCandidates("j1.txt"), []);
+  assert.deepEqual(asked, ["/api/jobs/j1.txt/ranked-candidates"]);
 });
