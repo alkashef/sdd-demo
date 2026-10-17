@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M11** HTTP API | The `src/api/` package: app factory, routers, response models, 404s, static mount; end-to-end API tests. Installs `fastapi`, `uvicorn`, `httpx`. | sonnet | high | open |
 | **M12** Entry point | `main.py` wiring, logging, `127.0.0.1` binding; end-to-end test from fake files and a fake LLM to the API; README setup and run. | sonnet | high | open |
 | **M13** Front end shell and lists | `index.html`, theme, `api.js`, list view, sticky header, file names (DEC-019); first headless-browser tests. Installs `playwright`. | sonnet | high | open |
 | **M14** Job view | Job text panel and foldable ranked candidate cards with recommendation and attributes (DEC-020). | sonnet | medium | open |
@@ -20,14 +19,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M11 — HTTP API
-
-- **Refs:** LST-001, LST-002, JOB-002, JOB-003, CND-001, CND-002, CND-003, ERR-001, MIS-001, DEC-002, DEC-012, DEC-013, DEC-015, DEC-020.
-- **Owner:** `src/api/app.py`, `src/api/jobs.py`, `src/api/candidates.py`, `src/api/status.py`, `src/api/schemas.py`.
-- **Tests first:** `test_lst_001_api_lists_job_descriptions`, `test_lst_002_api_lists_candidates`, `test_job_003_api_returns_job_text`, `test_dec_020_api_unknown_job_returns_404_with_detail`, `test_job_002_api_returns_ranked_candidates`, `test_cnd_001_api_returns_raw_cv`, `test_cnd_002_api_returns_attributes`, `test_cnd_003_api_returns_ranked_jobs`, `test_err_001_api_returns_failure_list`, `test_mis_001_api_missing_value_is_null`, `test_dec_015_api_last_job_has_end_and_is_current`, `test_dec_002_health_and_static_front_end_served`.
-- **Build:** the app factory over a finished workspace and a web root; one router per domain, each handler calling one `workspace_views` function; response models. Install `fastapi`, `uvicorn`, `httpx`, pin them, run `python scripts/lock.py`.
-- **Gate:** the checks pass; end-to-end tests use the framework's test client with a fake workspace; no handler imports a gateway, the pipeline or the domain directly.
 
 ### M12 — Entry point
 
