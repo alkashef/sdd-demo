@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M8** LLM client | `llm_client.py`: structured completion and embedding through the OpenAI SDK; failures become `LlmError`. Installs `openai`. | sonnet | high | open |
 | **M9** Pipeline | `pipeline.py` per DEC-007: extract once per CV, calculate, embed, rank both ways, recommend per pair; `LlmError` recorded per item (DEC-008). | opus | high | open |
 | **M10** Workspace views | `workspace_views.py`: lists, job detail, ranked candidates, candidate detail, ranked jobs, failure list. | sonnet | high | open |
 | **M11** HTTP API | The `src/api/` package: app factory, routers, response models, 404s, static mount; end-to-end API tests. Installs `fastapi`, `uvicorn`, `httpx`. | sonnet | high | open |
@@ -23,14 +22,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M8 — LLM client
-
-- **Refs:** NFR-001, NFR-002, ERR-001, DEC-003, DEC-011.
-- **Owner:** `src/llm_client.py`.
-- **Tests first:** `test_err_001_provider_failure_raises_llm_error_naming_cause`, `test_err_001_rejected_request_raises_llm_error`, `test_dec_011_refusal_raises_llm_output_error_with_raw_output`, `test_nfr_002_api_key_not_in_error_or_log`, `test_nfr_001_complete_sends_only_given_system_and_user_text`, `test_dec_003_embed_returns_vector`, `test_dec_003_model_timeout_and_token_limit_come_from_settings`.
-- **Build:** implement `StructuredCompleter` and `Embedder` over the async OpenAI SDK, with a fake SDK client in tests; map every provider failure to `LlmError`. Install `openai`, pin it, run `python scripts/lock.py`.
-- **Gate:** the checks pass; no test calls the real service. The model IDs stay untested until the user's first manual run (DEC-003).
 
 ### M9 — Pipeline
 

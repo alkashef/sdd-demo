@@ -7,3 +7,5 @@ ruff==0.17.1
 python-dotenv==1.2.4
 chromadb==1.5.9
 pydantic==2.14.1
+openai==3.33.0
+pytest-asyncio==1.4.0

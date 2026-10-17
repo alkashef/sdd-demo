@@ -6,7 +6,7 @@ CV Matcher
 
 ## Stack
 
-Python 3.12, conda environment `sdd-demo`, pytest, ruff, mypy, chromadb 1.5.9 (in-memory vector store), pydantic 2.14.1 (LLM reply schemas)
+Python 3.12, conda environment `sdd-demo`, pytest, ruff, mypy, chromadb 1.5.9 (in-memory vector store), pydantic 2.14.1 (LLM reply schemas), openai 3.33.0 (LLM client), pytest-asyncio 1.4.0 (async tests)
 
 ## File structure
 
