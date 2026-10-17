@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M10** Workspace views | `workspace_views.py`: lists, job detail, ranked candidates, candidate detail, ranked jobs, failure list. | sonnet | high | open |
 | **M11** HTTP API | The `src/api/` package: app factory, routers, response models, 404s, static mount; end-to-end API tests. Installs `fastapi`, `uvicorn`, `httpx`. | sonnet | high | open |
 | **M12** Entry point | `main.py` wiring, logging, `127.0.0.1` binding; end-to-end test from fake files and a fake LLM to the API; README setup and run. | sonnet | high | open |
 | **M13** Front end shell and lists | `index.html`, theme, `api.js`, list view, sticky header, file names (DEC-019); first headless-browser tests. Installs `playwright`. | sonnet | high | open |
@@ -21,14 +20,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M10 — Workspace views
-
-- **Refs:** LST-001, LST-002, JOB-002, JOB-003, CND-001, CND-002, CND-003, RNK-003, REC-001, MIS-001, MIS-002, ERR-001, DEC-015, DEC-020.
-- **Owner:** `src/workspace_views.py`.
-- **Tests first:** `test_lst_001_job_list_has_id_and_title`, `test_lst_002_candidate_list_has_id_and_name`, `test_job_003_job_detail_has_raw_text`, `test_dec_020_job_detail_unknown_id_raises_not_found`, `test_job_002_ranked_candidates_best_first_with_score`, `test_rnk_003_ranked_candidate_has_extracted_and_calculated_attributes`, `test_rec_001_ranked_candidate_has_recommendation`, `test_cnd_001_candidate_detail_has_raw_text`, `test_cnd_002_candidate_detail_has_attributes`, `test_cnd_003_ranked_jobs_best_first_without_recommendation`, `test_mis_001_missing_value_is_none`, `test_mis_002_candidate_without_facts_stays_in_lists`, `test_dec_015_last_job_has_is_current`, `test_err_001_failure_list_has_item_and_cause`.
-- **Build:** one pure function per read, using only `records` and the pure functions of `attributes`.
-- **Gate:** the checks pass; the module imports nothing from the API, gateways or pipeline.
 
 ### M11 — HTTP API
 
