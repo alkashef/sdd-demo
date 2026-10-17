@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M9** Pipeline | `pipeline.py` per DEC-007: extract once per CV, calculate, embed, rank both ways, recommend per pair; `LlmError` recorded per item (DEC-008). | opus | high | open |
 | **M10** Workspace views | `workspace_views.py`: lists, job detail, ranked candidates, candidate detail, ranked jobs, failure list. | sonnet | high | open |
 | **M11** HTTP API | The `src/api/` package: app factory, routers, response models, 404s, static mount; end-to-end API tests. Installs `fastapi`, `uvicorn`, `httpx`. | sonnet | high | open |
 | **M12** Entry point | `main.py` wiring, logging, `127.0.0.1` binding; end-to-end test from fake files and a fake LLM to the API; README setup and run. | sonnet | high | open |
@@ -22,14 +21,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M9 — Pipeline
-
-- **Refs:** EXT-001, JOB-001, PRG-003, MIS-002, ERR-001, ERR-002, RNK-001, RNK-002, REC-001, NFR-001, DEC-007, DEC-008.
-- **Owner:** `src/pipeline.py`.
-- **Tests first:** `test_ext_001_every_cv_is_read_and_extracted`, `test_job_001_every_job_description_is_read`, `test_prg_003_one_extraction_per_cv`, `test_rnk_001_both_rankings_come_from_the_vector_store`, `test_rnk_002_rank_unchanged_by_calculated_attributes`, `test_rec_001_one_recommendation_per_job_cv_pair`, `test_mis_002_failed_extraction_keeps_candidate_in_every_ranking`, `test_err_002_failed_call_recorded_and_other_results_kept`, `test_err_001_failure_cause_names_the_step`, `test_dec_008_non_llm_error_still_stops_the_run`, `test_dec_007_concurrency_stays_within_the_limit`, `test_nfr_001_job_text_and_cv_text_go_only_to_the_llm_client`.
-- **Build:** run the start-up steps of DEC-007 with the file reader, LLM client and two vector stores passed in; catch only `LlmError` per item; return the in-memory `Workspace`.
-- **Gate:** the checks pass; the only `except` for continuing is the `LlmError` one named in DEC-008.
 
 ### M10 — Workspace views
 
