@@ -7,11 +7,11 @@ Two hooks run it, and so can you:
     python scripts/check.py --edited   # one edited file, with a Claude Code hook's JSON on stdin
 
 Each check runs once there is something for it to check. Python (with `ruff.toml`): ruff always,
-mypy once `src/` holds Python, pytest with the 80% branch-coverage floor once `tests/` holds a
-`test_*.py`. Web (with `package.json`): ESLint and tsc (with `eslint.config.js`) once `src/` or
-`tests/` holds JavaScript, Prettier once they hold JavaScript, CSS or HTML, Stylelint once `src/`
-holds CSS, `node --test` once `tests/` holds a `*.test.js`. A new project with no tests can
-still commit.
+mypy once `src/` holds Python, pytest with the 80% branch-coverage floor once `src/` holds Python
+and `tests/` holds a `test_*.py`. Web (with `package.json`): ESLint and tsc (with
+`eslint.config.js`) once `src/` or `tests/` holds JavaScript, Prettier once they hold JavaScript,
+CSS or HTML, Stylelint once `src/` holds CSS, `node --test` once `tests/` holds a `*.test.js`. A
+new project with no tests can still commit.
 
 The full run exits 2 if anything fails, so that git refuses the commit. With --edited, ruff,
 ESLint, Stylelint and Prettier fix what they can in that one file (tests do not run), and the rest
@@ -72,7 +72,7 @@ def python_checks() -> list[list[str]]:
     checks = [python_tool("ruff", "check", "."), python_tool("ruff", "format", "--check", ".")]
     if has_files(["src"], {".py"}):
         checks.append(python_tool("mypy"))
-    if has_tests("test_*.py"):
+    if has_files(["src"], {".py"}) and has_tests("test_*.py"):
         coverage = ["--cov=src", "--cov-branch", "--cov-fail-under=80"]
         checks.append(python_tool("pytest", "-q", *coverage))
     return checks
@@ -116,9 +116,30 @@ def label(command: list[str]) -> str:
     return " ".join(words)
 
 
+def lock_problems() -> list[str]:
+    """Return one message per `requirements.txt` pin that `constraints.txt` lacks or changes."""
+    pins: dict[str, dict[str, str]] = {}
+    for name in ("requirements.txt", "constraints.txt"):
+        path = ROOT / name
+        lines = path.read_text(encoding="utf-8").splitlines() if path.is_file() else []
+        pins[name] = {}
+        for line in lines:
+            package, _, version = line.split("#")[0].partition("==")
+            if version:
+                key = package.strip().lower().replace("_", "-").replace(".", "-")
+                pins[name][key] = version.strip()
+    return [
+        f"`{package}=={version}` in `requirements.txt` has no match in `constraints.txt` "
+        f"(found {pins['constraints.txt'].get(package) or 'nothing'}). "
+        "Run `python scripts/lock.py`."
+        for package, version in pins["requirements.txt"].items()
+        if pins["constraints.txt"].get(package) != version
+    ]
+
+
 def check_all() -> int:
     """Run every check that applies and print each failure. Return 0 or FAILED."""
-    failures: list[str] = []
+    failures: list[str] = [f"`lock check` failed:\n{problem}" for problem in lock_problems()]
     for command in python_checks() + web_checks():
         problem = why_not_runnable(command)
         if not problem:
