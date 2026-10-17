@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M5** Prompt data and CV extraction | `prompt_data.py`, the CV-facts schema, `extraction.py` and `prompts/extract_cv.md`. Installs `pydantic`. | sonnet | high | open |
 | **M6** Recommendation | `recommendation.py`, the recommendation schema and `prompts/match_cv_to_job.md`; the request carries no name or address. | sonnet | medium | open |
 | **M7** Settings | `config.py`, `config/.env.example` and `config/.env` with every key in design 2.3; a missing value fails at start-up. | sonnet | medium | open |
 | **M8** LLM client | `llm_client.py`: structured completion and embedding through the OpenAI SDK; failures become `LlmError`. Installs `openai`. | sonnet | high | open |
@@ -26,14 +25,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M5 — Prompt data and CV extraction
-
-- **Refs:** EXT-002, EXT-003, EXT-004, EXT-006, EXT-009, EXT-010, MIS-001, NFR-001, DEC-005, DEC-011, DEC-015, DEC-016.
-- **Owner:** `src/prompt_data.py`, `src/llm_schemas.py` (CV facts), `src/extraction.py`, `prompts/extract_cv.md`.
-- **Tests first:** `test_ext_002_name_extracted`, `test_ext_003_current_title_extracted`, `test_ext_004_skills_extracted`, `test_ext_006_city_and_country_extracted`, `test_ext_009_last_job_fields_extracted`, `test_ext_010_highest_degree_extracted`, `test_mis_001_null_fields_become_none`, `test_dec_015_current_job_with_end_refused_as_output_error`, `test_dec_016_system_text_is_prompt_and_user_text_is_tagged_cv`, `test_dec_016_injected_closing_tag_is_escaped`, `test_dec_016_placeholder_marker_in_cv_stays_unchanged`.
-- **Build:** tag-wrap with escaping (tag names an enum); the `pydantic` reply model with `YYYY-MM` dates and `is_current` per job; the extraction user text and the reply-to-`CvFacts` mapping; the system prompt file (year-only end is `null`, tagged content is untrusted data). Install `pydantic`, pin it, run `python scripts/lock.py`.
-- **Gate:** the checks pass; the prompt file has no placeholders.
 
 ### M6 — Recommendation
 
