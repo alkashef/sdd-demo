@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CV Matcher job view with failures</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{--bg:#F6F7FC;--surface:#FFFFFF;--line:#E4E7F3;--ink:#151833;--muted:#5A6080;--primary:#5B3DF5;--tint:#EEEAFF;--mint:#19D3A5;--track:#E9E6FF;--sun-bg:#FFF4D1;--sun-ink:#6B4A00;--sun-line:#F5D77A;--neutral-bg:#ECEEF7;--neutral-ink:#3F4560}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif}
+a{color:inherit;text-decoration:none}
+.nav-item{display:block;padding:8px 12px;border-radius:10px}
+.nav-item:hover{background:var(--tint)}
+.nav-item.sel{background:var(--tint)}
+.nav-item.sel .t{color:var(--primary)}
+.na{color:var(--muted);font-style:italic}
+summary{cursor:pointer}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column;min-height:3000px;background:var(--bg)">
+
+<header style="position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)">
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:1440px;margin:0 auto;padding:0 24px;min-height:64px;box-sizing:border-box">
+<svg aria-hidden="true" width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#5B3DF5"/><path d="M9 16.5l4.5 4.5L23 11.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span style="font-size:18px;font-weight:700;letter-spacing:-0.01em">CV Matcher</span>
+<span style="flex-grow:1"></span>
+<span style="font-size:13px;color:var(--muted)">10 candidates · 3 job descriptions</span>
+</div>
+</header>
+
+<div style="flex-grow:1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px;width:100%;max-width:1440px;margin:0 auto;padding:24px;box-sizing:border-box">
+
+<nav aria-label="Job descriptions and candidates" style="flex:0 0 260px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="padding:0 12px 6px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Job descriptions</div>
+<sc-for list="{{jobs}}" as="j" hint-placeholder-count="3">
+<a class="nav-item {{j.cls}}" href="#"><div class="t" style="font-size:14px;font-weight:600">{{j.title}}</div><div style="font-size:12px;color:var(--muted)">{{j.file}}</div></a>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="padding:0 12px 6px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Candidates</div>
+<sc-for list="{{people}}" as="p" hint-placeholder-count="10">
+<a class="nav-item" href="#"><div class="t" style="font-size:14px;font-weight:600">{{p.file}}</div><div class="na" style="font-size:12px">Name not available</div></a>
+</sc-for>
+</div>
+</nav>
+
+<main style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:20px">
+
+<div role="alert" style="background:var(--sun-bg);color:var(--sun-ink);border:1px solid var(--sun-line);border-radius:16px;padding:16px 20px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:flex-start;gap:10px;font-size:15px;font-weight:700;line-height:1.4">
+<svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" style="flex:0 0 auto;margin-top:1px"><path d="M10 3l8 14H2L10 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+<span>The OpenAI service did not respond. Rankings and raw texts are shown. Attributes and recommendations are not.</span>
+</div>
+<details open>
+<summary style="font-size:13px;font-weight:600">Failure list (showing 4 of 40)</summary>
+<ul style="margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.7">
+<sc-for list="{{failures}}" as="x" hint-placeholder-count="4">
+<li><span style="font-weight:700">{{x.item}}</span>: {{x.cause}}</li>
+</sc-for>
+</ul>
+</details>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:2px">
+<h1 style="margin:0;font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-0.02em">Healthcare Data Analyst</h1>
+<div style="font-size:12px;color:var(--muted)">29243.txt</div>
+<div style="font-size:14px;color:var(--muted);padding-top:4px">All 10 candidates, best match first.</div>
+</div>
+
+<details style="background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 20px">
+<summary style="font-size:14px;font-weight:700">Job description text</summary>
+<div style="margin-top:12px;max-height:200px;overflow:auto;padding:14px 16px;background:var(--bg);border-radius:12px;font-size:13.5px;line-height:1.6;display:flex;flex-direction:column;gap:8px">
+<p style="margin:0">Healthcare Data Analyst</p>
+<p style="margin:0">We are looking for a data analyst to join our clinical reporting team. You will turn hospital and patient data into reports and dashboards that help clinicians and managers make decisions.</p>
+</div>
+</details>
+
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="10">
+<section style="background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px">
+
+<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+<div style="width:36px;height:36px;border-radius:50%;background:var(--tint);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex:0 0 auto">{{c.rank}}</div>
+<div style="flex:1 1 180px;min-width:0">
+<div style="font-size:17px;font-weight:700;letter-spacing:-0.01em">{{c.file}}</div>
+<div class="na" style="font-size:12px">Name not available</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+<div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:22px;font-weight:700;color:var(--primary)">{{c.score}}</span><span style="font-size:11px;color:var(--muted)">match</span></div>
+<div style="width:130px;height:6px;border-radius:3px;background:var(--track)"><div style="width:{{c.pct}};height:6px;border-radius:3px;background:var(--mint)"></div></div>
+</div>
+</div>
+
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--bg);border-radius:12px;padding:12px 14px">
+<span style="display:inline-flex;align-items:center;padding:4px 12px;border-radius:999px;background:var(--neutral-bg);color:var(--neutral-ink);font-size:13px;font-weight:700;white-space:nowrap">Not available</span>
+<div style="flex:1 1 280px;font-size:14px;line-height:1.5;color:var(--muted)">The recommendation could not be generated.</div>
+</div>
+
+<div style="font-size:14px"><span style="font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted)">Extracted and calculated attributes</span><div class="na" style="padding-top:2px">Not available</div></div>
+
+</section>
+</sc-for>
+
+</main>
+</div>
+
+<footer style="border-top:1px solid var(--line);background:var(--surface)">
+<div style="max-width:1440px;margin:0 auto;padding:16px 24px;box-sizing:border-box;font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 24px">
+<span>Runs locally at 127.0.0.1:8000.</span>
+<span>CV and job description text goes only to OpenAI, for embeddings, extraction and recommendations.</span>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":3000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const ranked = [
+      ['11695', '0.82'], ['22710', '0.79'], ['15087', '0.76'], ['17635', '0.71'], ['15639', '0.52'],
+      ['8553', '0.49'], ['367', '0.47'], ['10004', '0.41'], ['13882', '0.39'], ['8568', '0.36']
+    ];
+    const cards = ranked.map((r, i) => ({
+      rank: i + 1,
+      file: r[0] + '.txt',
+      score: r[1],
+      pct: Math.round(parseFloat(r[1]) * 100) + '%'
+    }));
+    const people = ranked.map((r) => ({ file: r[0] + '.txt' })).sort((a, b) => a.file.localeCompare(b.file, undefined, { numeric: true }));
+    const jobs = [
+      { title: 'Healthcare Data Analyst', file: '29243.txt', cls: 'sel' },
+      { title: 'Senior Mechanical/HVAC Engineer', file: '32447.txt', cls: '' },
+      { title: 'Retail Mortgage Loan Closer', file: '38671.txt', cls: '' }
+    ];
+    const failures = [
+      { item: '11695.txt', cause: 'extraction failed, request timed out after 60 s' },
+      { item: '22710.txt', cause: 'extraction failed, request timed out after 60 s' },
+      { item: '29243.txt + 11695.txt', cause: 'recommendation failed, request timed out after 60 s' },
+      { item: '29243.txt + 22710.txt', cause: 'recommendation failed, request timed out after 60 s' }
+    ];
+    return { cards, people, jobs, failures };
+  }
+}
+</script>
+</body>
+</html>

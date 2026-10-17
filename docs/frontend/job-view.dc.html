@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CV Matcher job view</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{--bg:#F6F7FC;--surface:#FFFFFF;--line:#E4E7F3;--ink:#151833;--muted:#5A6080;--primary:#5B3DF5;--tint:#EEEAFF;--chip-ink:#3F26C9;--mint:#19D3A5;--mint-bg:#D6F8EC;--mint-ink:#0A6B52;--coral-bg:#FFE7E2;--coral-ink:#A32A1C;--track:#E9E6FF}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif}
+a{color:inherit;text-decoration:none}
+.nav-item{display:block;padding:8px 12px;border-radius:10px}
+.nav-item:hover{background:var(--tint)}
+.nav-item.sel{background:var(--tint)}
+.nav-item.sel .t{color:var(--primary)}
+.na{color:var(--muted);font-style:italic}
+summary{cursor:pointer}
+summary::-webkit-details-marker{display:none}
+.chev{transform:rotate(0deg)}
+details[open]>summary .chev{transform:rotate(90deg)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+</style>
+</helmet>
+<div style="display:flex;flex-direction:column;min-height:4700px;background:var(--bg)">
+
+<header style="position:sticky;top:0;z-index:5;background:var(--surface);border-bottom:1px solid var(--line)">
+<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:1440px;margin:0 auto;padding:0 24px;min-height:64px;box-sizing:border-box">
+<svg aria-hidden="true" width="32" height="32" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#5B3DF5"/><path d="M9 16.5l4.5 4.5L23 11.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span style="font-size:18px;font-weight:700;letter-spacing:-0.01em">CV Matcher</span>
+<span style="flex-grow:1"></span>
+<span style="font-size:13px;color:var(--muted)">10 candidates · 3 job descriptions</span>
+</div>
+</header>
+
+<div style="flex-grow:1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:24px;width:100%;max-width:1440px;margin:0 auto;padding:24px;box-sizing:border-box">
+
+<nav aria-label="Job descriptions and candidates" style="flex:0 0 260px;display:flex;flex-direction:column;gap:24px">
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="padding:0 12px 6px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Job descriptions</div>
+<sc-for list="{{jobs}}" as="j" hint-placeholder-count="3">
+<a class="nav-item {{j.cls}}" href="#"><div class="t" style="font-size:14px;font-weight:600">{{j.title}}</div><div style="font-size:12px;color:var(--muted)">{{j.file}}</div></a>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:2px">
+<div style="padding:0 12px 6px;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)">Candidates</div>
+<sc-for list="{{people}}" as="p" hint-placeholder-count="10">
+<a class="nav-item" href="#"><div class="t" style="font-size:14px;font-weight:600">{{p.name}}</div><div style="font-size:12px;color:var(--muted)">{{p.file}}</div></a>
+</sc-for>
+</div>
+</nav>
+
+<main style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:20px">
+
+<div style="display:flex;flex-direction:column;gap:2px">
+<h1 style="margin:0;font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-0.02em">Healthcare Data Analyst</h1>
+<div style="font-size:12px;color:var(--muted)">29243.txt</div>
+<div style="font-size:14px;color:var(--muted);padding-top:4px">All 10 candidates, best match first.</div>
+</div>
+
+<details open style="background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 20px">
+<summary style="font-size:14px;font-weight:700">Job description text</summary>
+<div style="margin-top:12px;max-height:200px;overflow:auto;padding:14px 16px;background:var(--bg);border-radius:12px;font-size:13.5px;line-height:1.6;display:flex;flex-direction:column;gap:8px">
+<p style="margin:0">Healthcare Data Analyst</p>
+<p style="margin:0">We are looking for a data analyst to join our clinical reporting team. You will turn hospital and patient data into reports and dashboards that help clinicians and managers make decisions.</p>
+<p style="margin:0">Responsibilities: build and maintain reports in SQL and a BI tool, check data quality, work with clinical staff to define measures, and present findings to non-technical audiences.</p>
+<p style="margin:0">Requirements: a degree in a quantitative or health-related field, three or more years of analytics experience, strong SQL, and an understanding of healthcare data standards.</p>
+</div>
+</details>
+
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="10">
+<details open style="background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px">
+
+<summary style="list-style:none;display:block">
+<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+<svg class="chev" aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" style="flex:0 0 auto;color:var(--muted)"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div style="width:36px;height:36px;border-radius:50%;background:var(--tint);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;flex:0 0 auto">{{c.rank}}</div>
+<div style="flex:1 1 180px;min-width:0">
+<div style="font-size:17px;font-weight:700;letter-spacing:-0.01em">{{c.name}}</div>
+<div style="font-size:12px;color:var(--muted)">{{c.file}}</div>
+</div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+<div style="display:flex;align-items:baseline;gap:6px"><span style="font-size:22px;font-weight:700;color:var(--primary)">{{c.score}}</span><span style="font-size:11px;color:var(--muted)">match</span></div>
+<div style="width:130px;height:6px;border-radius:3px;background:var(--track)"><div style="width:{{c.pct}};height:6px;border-radius:3px;background:var(--mint)"></div></div>
+</div>
+</div>
+</summary>
+
+<div style="display:flex;flex-direction:column;gap:16px;margin-top:16px">
+
+<div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;background:var(--bg);border-radius:12px;padding:12px 14px">
+<sc-if value="{{c.yes}}" hint-placeholder-val="{{ true }}">
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:var(--mint-bg);color:var(--mint-ink);font-size:13px;font-weight:700;white-space:nowrap"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14"><path d="M2.5 7.5l3 3 6-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Interview</span>
+</sc-if>
+<sc-if value="{{c.no}}" hint-placeholder-val="{{ false }}">
+<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:var(--coral-bg);color:var(--coral-ink);font-size:13px;font-weight:700;white-space:nowrap"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14"><path d="M3 3l8 8M11 3l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Skip</span>
+</sc-if>
+<div style="flex:1 1 280px;font-size:14px;line-height:1.5">{{c.reason}}</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px 24px">
+<sc-for list="{{c.facts}}" as="f" hint-placeholder-count="6">
+<div><div style="font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted)">{{f.k}}</div><div class="{{f.cls}}" style="font-size:14px;line-height:1.4">{{f.v}}</div></div>
+</sc-for>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:6px">
+<sc-for list="{{c.skills}}" as="s" hint-placeholder-count="4">
+<span style="padding:4px 10px;border-radius:999px;background:var(--tint);color:var(--chip-ink);font-size:12.5px;font-weight:600">{{s.s}}</span>
+</sc-for>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;padding-top:14px;border-top:1px solid var(--line)">
+<sc-for list="{{c.stats}}" as="t" hint-placeholder-count="6">
+<div><div style="font-size:11px;color:var(--muted)">{{t.k}}</div><div class="{{t.cls}}" style="font-size:16px;font-weight:650">{{t.v}}</div></div>
+</sc-for>
+</div>
+</div>
+
+</details>
+</sc-for>
+
+</main>
+</div>
+
+<footer style="border-top:1px solid var(--line);background:var(--surface)">
+<div style="max-width:1440px;margin:0 auto;padding:16px 24px;box-sizing:border-box;font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 24px">
+<span>Runs locally at 127.0.0.1:8000.</span>
+<span>CV and job description text goes only to OpenAI, for embeddings, extraction and recommendations.</span>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":4700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const NA = 'Not available';
+    const rows = [
+      "11695|Maya Okafor|Senior Healthcare Data Analyst|Leeds, United Kingdom|Master's, Health Informatics|NHS Digital · Lead Analyst · Jan 2022 – Present (58 mo)|United Kingdom|NHS Digital; Royal Free London; Kantar Health|SQL; Python; Power BI; HL7 FHIR; Statistics|106 mo|3|35.3 mo|None (0 mo)|102 mo|Yes|0.82|1|Strong fit: clinical reporting, SQL and BI dashboards, and 58 months in the current role.",
+      "22710|Daniel Reyes|Clinical Data Analyst|Madrid, Spain|Bachelor's, Biostatistics|Hospital La Paz · Data Analyst · Mar 2020 – Present (80 mo)|Spain; Portugal|Hospital La Paz; Siemens Healthineers|SQL; R; Tableau; ICD-10 coding|94 mo|2|47.0 mo|None (0 mo)|120 mo|Yes|0.79|1|Good fit: hospital analytics with R and Tableau. No stated experience with healthcare data standards.",
+      "15087|Priya Raman|Healthcare Business Analyst|Toronto, Canada|MBA, Health Administration|Sunnybrook Health · Business Analyst · Sep 2021 – Present (62 mo)|Canada; India|Sunnybrook Health; Infosys; Apollo Hospitals|Excel; SQL; Tableau; Process mapping|132 mo|4|30.8 mo|6 mo, 3 mo|150 mo|Yes|0.76|1|Good fit on reporting and stakeholder work. Two short gaps between jobs; worth asking about in the interview.",
+      "17635|Tom Lindqvist|Reporting Analyst|Gothenburg, Sweden|Bachelor's, Information Systems|Region Västra Götaland · Reporting Analyst · Aug 2019 – Not available|Sweden|Region Västra Götaland; Volvo IT|SQL; Qlik Sense; Data warehousing|112 mo|3|Not available|Not available|96 mo|Not available|0.71|1|Relevant reporting background. The CV gives no end date for the last job, so tenure is unknown. Consider a screening call.",
+      "15639|Noah Chen|Mortgage Loan Closer|Austin, United States|Associate, Business Administration|Lone Star Lending · Loan Closer · Feb 2021 – Present (69 mo)|United States|Lone Star Lending; Capital Title|Loan closing; Title review; Compliance; Encompass|90 mo|3|30.0 mo|None (0 mo)|Not available|Yes|0.52|0|Experienced loan closer, but no analytics or healthcare work. Not a match for this role.",
+      "8553|Ben Walker|Closing Specialist|Denver, United States|Bachelor's, Finance|Summit Home Loans · Closing Specialist · Jun 2022 – Present (53 mo)|United States|Summit Home Loans; First American|Loan closing; Escrow; Customer service|75 mo|3|25.0 mo|None (0 mo)|108 mo|Yes|0.49|0|Mortgage closing profile with no analytics or healthcare experience. Not recommended for this role.",
+      "367|Hana Sato|Loan Processor|Seattle, United States|Bachelor's, Economics|Cascade Credit Union · Loan Processor · Nov 2020 – Present (72 mo)|United States; Japan|Cascade Credit Union; MUFG|Loan processing; Underwriting support; Excel|100 mo|3|33.3 mo|None (0 mo)|126 mo|Yes|0.47|0|Finance operations background. Uses Excel but has no SQL or healthcare data experience.",
+      "10004|Sofia Alvarez|Mechanical Engineer|Houston, United States|Master's, Mechanical Engineering|Gulf Climate Systems · Project Engineer · Jan 2021 – Present (70 mo)|United States; Mexico|Gulf Climate Systems; Carrier|HVAC design; AutoCAD; Load calculation|114 mo|3|35.0 mo|9 mo|96 mo|Yes|0.41|0|Engineering profile. Skills do not overlap with the data analysis requirements.",
+      "13882|Leo Moretti|Senior HVAC Engineer|Milan, Italy|Master's, Energy Engineering|Climaplan · Senior Engineer · Apr 2019 – Present (91 mo)|Italy; Germany|Climaplan; Viessmann|HVAC design; Energy modelling; BIM|130 mo|3|43.3 mo|None (0 mo)|150 mo|Yes|0.39|0|Senior HVAC specialist. No data analysis or healthcare experience.",
+      "8568|Aisha Karim|HVAC Design Engineer|Dubai, United Arab Emirates|Bachelor's, Mechanical Engineering|Gulf Air Design · Design Engineer · Sep 2022 – Present (50 mo)|United Arab Emirates; Qatar|Gulf Air Design; Trane|Revit; Duct design; Site supervision|82 mo|2|41.0 mo|None (0 mo)|Not available|Yes|0.36|0|HVAC design profile. Not a match for this analyst role."
+    ];
+    const val = (k, v) => ({ k, v, cls: v === NA ? 'na' : '' });
+    const parsed = rows.map((r) => r.split('|'));
+    const cards = parsed.map((p, i) => ({
+      rank: i + 1,
+      name: p[1],
+      file: p[0] + '.txt',
+      score: p[15],
+      pct: Math.round(parseFloat(p[15]) * 100) + '%',
+      yes: p[16] === '1',
+      no: p[16] !== '1',
+      reason: p[17],
+      facts: [
+        val('Current title', p[2]),
+        val('Location', p[3]),
+        val('Highest degree', p[4]),
+        val('Last job', p[5]),
+        val('Countries worked', p[6]),
+        val('Companies', p[7])
+      ],
+      skills: p[8].split(';').map((s) => ({ s: s.trim() })),
+      stats: [
+        val('Total employment', p[9]),
+        val('Jobs held', p[10]),
+        val('Average per job', p[11]),
+        val('Employment gaps', p[12]),
+        val('Since graduation', p[13]),
+        val('Employed now', p[14])
+      ]
+    }));
+    const people = parsed
+      .map((p) => ({ name: p[1], file: p[0] + '.txt' }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    const jobs = [
+      { title: 'Healthcare Data Analyst', file: '29243.txt', cls: 'sel' },
+      { title: 'Senior Mechanical/HVAC Engineer', file: '32447.txt', cls: '' },
+      { title: 'Retail Mortgage Loan Closer', file: '38671.txt', cls: '' }
+    ];
+    return { cards, people, jobs };
+  }
+}
+</script>
+</body>
+</html>
