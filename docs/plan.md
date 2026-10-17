@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M7** Settings | `config.py`, `config/.env.example` and `config/.env` with every key in design 2.3; a missing value fails at start-up. | sonnet | medium | open |
 | **M8** LLM client | `llm_client.py`: structured completion and embedding through the OpenAI SDK; failures become `LlmError`. Installs `openai`. | sonnet | high | open |
 | **M9** Pipeline | `pipeline.py` per DEC-007: extract once per CV, calculate, embed, rank both ways, recommend per pair; `LlmError` recorded per item (DEC-008). | opus | high | open |
 | **M10** Workspace views | `workspace_views.py`: lists, job detail, ranked candidates, candidate detail, ranked jobs, failure list. | sonnet | high | open |
@@ -24,14 +23,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M7 — Settings
-
-- **Refs:** NFR-002, DEC-013, DEC-003, design section 2.3.
-- **Owner:** `src/config.py`, `config/.env.example`, `config/.env`.
-- **Tests first:** `test_nfr_002_api_key_not_in_settings_repr`, `test_design_2_3_missing_value_fails_clearly`, `test_design_2_3_invalid_number_fails_clearly`, `test_design_2_3_environment_overrides_env_file`, `test_design_2_3_env_example_lists_every_setting`, `test_dec_013_env_example_host_is_127_0_0_1`.
-- **Build:** frozen typed settings objects grouped per component, loaded with `python-dotenv` from a path passed in; no defaults in code; add every key of design section 2.3 to `.env.example` with its default (secret empty) and to the local `config/.env`.
-- **Gate:** the checks pass; `config/.env` is not committed; the settings table in `docs/design.md` matches the keys.
 
 ### M8 — LLM client
 
