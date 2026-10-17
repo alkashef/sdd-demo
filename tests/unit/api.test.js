@@ -12,6 +12,7 @@ const paths = {
   jobs: "/api/jobs",
   candidates: "/api/candidates",
   rankedCandidates: "ranked-candidates",
+  rankedJobs: "ranked-jobs",
 };
 
 /**
@@ -75,4 +76,18 @@ test("job_002 listRankedCandidates asks for the ranking path and returns the lis
   };
   assert.deepEqual(await createApi(paths, recording).listRankedCandidates("j1.txt"), []);
   assert.deepEqual(asked, ["/api/jobs/j1.txt/ranked-candidates"]);
+});
+
+test("cnd_001 getCandidate and cnd_003 listRankedJobs ask for the candidate paths", async () => {
+  /** @type {string[]} */
+  const asked = [];
+  /** @type {typeof fetch} */
+  const recording = async (input) => {
+    asked.push(String(input));
+    return new Response("[]");
+  };
+  const api = createApi(paths, recording);
+  await api.getCandidate("a b.txt");
+  await api.listRankedJobs("a b.txt");
+  assert.deepEqual(asked, ["/api/candidates/a%20b.txt", "/api/candidates/a%20b.txt/ranked-jobs"]);
 });

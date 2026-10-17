@@ -89,6 +89,51 @@
       </article>
     </template>
 
+    <template id="candidate-view-template">
+      <article class="candidate-view">
+        <header class="job-view__head">
+          <h1 class="main__title" data-title></h1>
+          <p class="job-view__file candidate-view__file" data-file></p>
+          <p class="job-view__meta candidate-view__meta" data-meta></p>
+        </header>
+        <div class="candidate-view__columns">
+          <section class="panel candidate-view__cv">
+            <h2 class="panel__title">CV text</h2>
+            <div class="doc doc--mono" data-cv-text></div>
+          </section>
+          <div class="candidate-view__cards">
+            <section class="panel candidate-view__section">
+              <h2 class="panel__title">Extracted attributes</h2>
+              <div class="fields" data-facts></div>
+              <div class="chips" data-chips></div>
+            </section>
+            <section class="panel candidate-view__section">
+              <h2 class="panel__title">Calculated attributes</h2>
+              <div class="stats stats--plain" data-stats></div>
+            </section>
+            <section class="panel candidate-view__section">
+              <h2 class="panel__title">Best-matching job descriptions</h2>
+              <ol class="job-rows" data-jobs></ol>
+            </section>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <template id="job-row-template">
+      <li class="job-row">
+        <span class="job-row__rank" data-rank></span>
+        <span class="job-row__who">
+          <span class="job-row__title" data-title></span>
+          <span class="job-row__file" data-file></span>
+        </span>
+        <span class="candidate-card__match">
+          <span class="job-row__score" data-score></span>
+          <span class="score-bar"><span class="score-bar__fill" data-bar></span></span>
+        </span>
+      </li>
+    </template>
+
     <template id="candidate-card-template">
       <details class="candidate-card" open>
         <summary class="candidate-card__summary" title="Fold or unfold this candidate">

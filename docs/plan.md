@@ -9,21 +9,12 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M15** Candidate view | Raw CV, attributes and ranked job descriptions. | sonnet | medium | open |
 | **M16** Failure and unavailable states | Failure panel, "Not available" values, and "Present" against unknown end (DEC-015). | sonnet | medium | open |
 | **M17** Evaluation | `evaluation.py` and `main.py --evaluate` for NFR-004 and NFR-005; `.gitignore` exception so `gold_jobs.json` is committed (DEC-017). | sonnet | high | open |
 | **M18** Sample build script | `scripts/build_sample.py` rebuilds `data/sample/` from the raw TalentCLEF files (DEC-010). | sonnet | medium | open |
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M15 — Candidate view
-
-- **Refs:** CND-001, CND-002, CND-003, DEC-019.
-- **Owner:** `src/web/js/candidate-view.js` (and `src/web/css/detail.css`).
-- **Tests first:** `test_cnd_001_ui_selecting_candidate_shows_raw_cv`, `test_cnd_002_ui_shows_extracted_and_calculated_attributes`, `test_cnd_003_ui_shows_ranked_jobs_best_first_without_recommendation`.
-- **Build:** the candidate view per `docs/frontend/README.md`: raw CV beside the attributes card, then the ranked job descriptions.
-- **Gate:** the checks pass; the page matches the approved mockups in `docs/frontend/`.
 
 ### M16 — Failure and unavailable states
 

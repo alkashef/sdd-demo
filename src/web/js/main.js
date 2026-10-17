@@ -2,11 +2,12 @@
 /**
  * @module main
  * The entry point of the page: it connects the modules and shows any unexpected error with its
- * stack trace. It holds no other logic. Implements LST-001, LST-002, JOB-002, JOB-003, DEC-002 and DEC-019.
+ * stack trace. It holds no other logic. Implements LST-001, LST-002, JOB-002, JOB-003, CND-001 to CND-003, DEC-002 and DEC-019.
  */
 
 import { createApi } from "./api.js";
 import { config } from "./config.js";
+import { showCandidate } from "./candidate-view.js";
 import { showJob, showJobLoading } from "./job-view.js";
 import { ITEM_KINDS, SELECTION_EVENT, showCounts, showLists, watchSelection } from "./list-view.js";
 import { createLogger } from "./log.js";
@@ -57,16 +58,40 @@ async function loadJob(api, id) {
 }
 
 /**
- * Show a job and its ranked candidates when the user selects a job description.
+ * Load a candidate and the ranked job descriptions, and show them unless the user has selected
+ * another item.
+ * @param {import("./api.js").Api} api The API client.
+ * @param {string} id The file name of the selected candidate.
+ */
+async function loadCandidate(api, id) {
+  const view = /** @type {HTMLElement} */ (document.querySelector("[data-view]"));
+  view.dataset.selected = id;
+  showJobLoading(view);
+  const [candidate, ranked] = await Promise.all([api.getCandidate(id), api.listRankedJobs(id)]);
+  if (view.dataset.selected === id) {
+    const templates = {
+      view: templateById("candidate-view-template"),
+      row: templateById("job-row-template"),
+      fact: templateById("fact-template"),
+      stat: templateById("stat-template"),
+    };
+    showCandidate(view, templates, { candidate, ranked });
+  }
+}
+
+/**
+ * Show a job or a candidate when the user selects it.
  * @param {import("./api.js").Api} api The API client.
  * @param {HTMLElement} nav The navigation element, which announces selections.
  */
-function watchJobs(api, nav) {
+function watchSelections(api, nav) {
   nav.addEventListener(SELECTION_EVENT, (event) => {
     const { kind, id } = /** @type {CustomEvent<import("./list-view.js").Selection>} */ (event)
       .detail;
     if (kind === ITEM_KINDS.job) {
       loadJob(api, id).catch(showError);
+    } else if (kind === ITEM_KINDS.candidate) {
+      loadCandidate(api, id).catch(showError);
     }
   });
 }
@@ -83,7 +108,7 @@ async function start() {
   showLists(nav, template, jobs, candidates);
   showCounts(counts, candidates.length, jobs.length);
   watchSelection(nav);
-  watchJobs(api, nav);
+  watchSelections(api, nav);
   log.info(`Loaded ${jobs.length} job descriptions and ${candidates.length} candidates`);
 }
 

@@ -45,7 +45,7 @@ def _fake_workspace() -> Workspace:
             "j1.txt": [(doc_id, 0.9 - index / 100) for index, doc_id in enumerate(ids)],
             "j2.txt": [],
         },
-        ranked_jobs={doc_id: [("j1.txt", 0.5)] for doc_id in ids},
+        ranked_jobs={doc_id: [("j1.txt", 0.5), ("j2.txt", 0.4)] for doc_id in ids},
         recommendations={
             ("j1.txt", ids[0]): Recommendation(True, "Strong fit for the role."),
             ("j1.txt", ids[1]): Recommendation(False, "No analytics experience."),

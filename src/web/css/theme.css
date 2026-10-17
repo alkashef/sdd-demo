@@ -44,6 +44,8 @@
   --page-max-width: 1440px;
   --main-min-width: 560px;
   --doc-max-height: 200px;
+  --cv-max-height: 760px;
+  --font-size-mono: 12.5px;
   --radius-inset: 12px;
   --radius-pill: 999px;
   --font-size-name: 17px;

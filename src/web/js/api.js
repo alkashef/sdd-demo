@@ -39,15 +39,55 @@
  *   extracted: ExtractedAttributes | null,
  *   calculated: CalculatedAttributes | null,
  * }} RankedCandidate A candidate in the ranking of one job description (JOB-002).
- * @typedef {{ jobs: string, candidates: string, rankedCandidates: string }} ApiPaths The paths of
- *   the endpoints. `rankedCandidates` is the segment that follows a job path.
+ * @typedef {{
+ *   id: string,
+ *   name: string | null,
+ *   text: string,
+ *   extracted: ExtractedAttributes | null,
+ *   calculated: CalculatedAttributes | null,
+ * }} CandidateDetail A candidate with the raw CV and the attributes (CND-001, CND-002).
+ * @typedef {{ id: string, title: string, score: number | null }} RankedJob A job description in
+ *   the ranking of one candidate, without a recommendation (CND-003).
+ * @typedef {{ jobs: string, candidates: string, rankedCandidates: string, rankedJobs: string }}
+ *   ApiPaths The paths of the endpoints. `rankedCandidates` is the segment that follows a job
+ *   path, `rankedJobs` the one that follows a candidate path.
  * @typedef {{
  *   listJobs: () => Promise<JobSummary[]>,
  *   listCandidates: () => Promise<CandidateSummary[]>,
  *   getJob: (jobId: string) => Promise<JobDetail>,
  *   listRankedCandidates: (jobId: string) => Promise<RankedCandidate[]>,
+ *   getCandidate: (candidateId: string) => Promise<CandidateDetail>,
+ *   listRankedJobs: (candidateId: string) => Promise<RankedJob[]>,
  * }} Api
  */
+
+/**
+ * @param {string} base The path of a collection.
+ * @param {string} id The file name of one item.
+ * @returns {string} The path of that item.
+ */
+function itemPath(base, id) {
+  return `${base}/${encodeURIComponent(id)}`;
+}
+
+/**
+ * Get one JSON document.
+ * @template T
+ * @param {typeof fetch} fetchFn The function that sends a request.
+ * @param {string} path The endpoint path.
+ * @returns {Promise<T>} The parsed body.
+ */
+async function getJson(fetchFn, path) {
+  try {
+    const response = await fetchFn(path);
+    if (!response.ok) {
+      throw new Error(`GET ${path} answered ${response.status}`);
+    }
+    return /** @type {T} */ (await response.json());
+  } catch (error) {
+    throw new Error(`Could not load ${path}`, { cause: error });
+  }
+}
 
 /**
  * Create the API client.
@@ -57,33 +97,21 @@
  */
 export function createApi(paths, fetchFn = fetch) {
   /**
-   * Get one JSON document.
    * @template T
    * @param {string} path The endpoint path.
    * @returns {Promise<T>} The parsed body.
    */
-  async function getJson(path) {
-    try {
-      const response = await fetchFn(path);
-      if (!response.ok) {
-        throw new Error(`GET ${path} answered ${response.status}`);
-      }
-      return /** @type {T} */ (await response.json());
-    } catch (error) {
-      throw new Error(`Could not load ${path}`, { cause: error });
-    }
-  }
-
-  /**
-   * @param {string} jobId The file name of the job description.
-   * @returns {string} The path of that job.
-   */
-  const jobPath = (jobId) => `${paths.jobs}/${encodeURIComponent(jobId)}`;
-
+  const get = (path) => getJson(fetchFn, path);
+  /** @type {(id: string) => string} */
+  const job = (id) => itemPath(paths.jobs, id);
+  /** @type {(id: string) => string} */
+  const candidate = (id) => itemPath(paths.candidates, id);
   return {
-    listJobs: () => getJson(paths.jobs),
-    listCandidates: () => getJson(paths.candidates),
-    getJob: (jobId) => getJson(jobPath(jobId)),
-    listRankedCandidates: (jobId) => getJson(`${jobPath(jobId)}/${paths.rankedCandidates}`),
+    listJobs: () => get(paths.jobs),
+    listCandidates: () => get(paths.candidates),
+    getJob: (jobId) => get(job(jobId)),
+    listRankedCandidates: (jobId) => get(`${job(jobId)}/${paths.rankedCandidates}`),
+    getCandidate: (candidateId) => get(candidate(candidateId)),
+    listRankedJobs: (candidateId) => get(`${candidate(candidateId)}/${paths.rankedJobs}`),
   };
 }
