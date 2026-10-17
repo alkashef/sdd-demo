@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M12** Entry point | `main.py` wiring, logging, `127.0.0.1` binding; end-to-end test from fake files and a fake LLM to the API; README setup and run. | sonnet | high | open |
 | **M13** Front end shell and lists | `index.html`, theme, `api.js`, list view, sticky header, file names (DEC-019); first headless-browser tests. Installs `playwright`. | sonnet | high | open |
 | **M14** Job view | Job text panel and foldable ranked candidate cards with recommendation and attributes (DEC-020). | sonnet | medium | open |
 | **M15** Candidate view | Raw CV, attributes and ranked job descriptions. | sonnet | medium | open |
@@ -19,14 +18,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M12 — Entry point
-
-- **Refs:** EXT-001, JOB-001, EXT-002, EXT-003, EXT-004, EXT-006, EXT-007, EXT-008, EXT-009, EXT-010, CAL-001, CAL-002, CAL-003, CAL-004, CAL-005, CAL-007, PRG-003, NFR-002, DEC-007, DEC-013.
-- **Owner:** `main.py`.
-- **Tests first:** `test_ext_001_start_reads_cvs_and_api_lists_them_end_to_end`, `test_job_001_start_reads_job_descriptions_end_to_end`, `test_ext_002_to_ext_010_candidate_response_has_extracted_attributes_end_to_end`, `test_cal_001_to_cal_007_candidate_response_matches_ex_001_end_to_end`, `test_prg_003_start_extracts_each_cv_once_end_to_end`, `test_dec_013_server_started_with_host_from_settings`, `test_nfr_002_log_file_has_no_api_key`.
-- **Build:** load settings, set up logging, create the file reader, LLM client, vector stores and pipeline, run it with today's date, create the app and start the server; no logic in `main.py`. Update `README.md`: What it does, Stack, File structure, Setup (conda environment, `pip install -r requirements.txt`, `config/.env`, the OpenAI key), How to run, How to test.
-- **Gate:** the checks pass; the end-to-end tests use a fake file reader and a fake LLM; `README.md` has all six sections.
 
 ### M13 — Front end shell and lists
 
