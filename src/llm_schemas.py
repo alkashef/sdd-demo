@@ -2,7 +2,7 @@
 
 The SDK validates a reply against these. It does not map a reply to records (`extraction` does).
 Every field is required and may be `null`, because the LLM must say "unknown" rather than guess.
-Implements EXT-002 to EXT-004, EXT-006, EXT-009, EXT-010, MIS-001, DEC-011, DEC-015.
+Implements EXT-002 to EXT-004, EXT-006, EXT-009, EXT-010, REC-001, MIS-001, DEC-011, DEC-015.
 """
 
 from typing import Annotated
@@ -51,3 +51,10 @@ class CvFactsReply(_Reply):
     highest_degree: str | None
     jobs: list[JobReply]
     education: list[EducationReply]
+
+
+class RecommendationReply(_Reply):
+    """The recommendation for one job description and one candidate (REC-001)."""
+
+    interview: bool
+    reason: str

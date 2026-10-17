@@ -9,7 +9,6 @@ history is the record. Template: `docs/workflow.md`.
 
 | Milestone | Description | Model | Effort | Status |
 | --- | --- | --- | --- | --- |
-| **M6** Recommendation | `recommendation.py`, the recommendation schema and `prompts/match_cv_to_job.md`; the request carries no name or address. | sonnet | medium | open |
 | **M7** Settings | `config.py`, `config/.env.example` and `config/.env` with every key in design 2.3; a missing value fails at start-up. | sonnet | medium | open |
 | **M8** LLM client | `llm_client.py`: structured completion and embedding through the OpenAI SDK; failures become `LlmError`. Installs `openai`. | sonnet | high | open |
 | **M9** Pipeline | `pipeline.py` per DEC-007: extract once per CV, calculate, embed, rank both ways, recommend per pair; `LlmError` recorded per item (DEC-008). | opus | high | open |
@@ -25,14 +24,6 @@ history is the record. Template: `docs/workflow.md`.
 | **M19** CI workflow | `.github/workflows/check.yml` on `windows-latest`, action versions pinned when built (DEC-018). | sonnet | medium | open |
 
 ## Milestones
-
-### M6 — Recommendation
-
-- **Refs:** REC-001, NFR-001, DEC-006, DEC-016.
-- **Owner:** `src/recommendation.py`, `src/llm_schemas.py` (recommendation), `prompts/match_cv_to_job.md`.
-- **Tests first:** `test_rec_001_reply_becomes_interview_flag_and_reason`, `test_rec_001_facts_carry_is_current_beside_end`, `test_dec_006_request_has_no_name_or_address`, `test_dec_016_user_text_has_tagged_job_description_and_json_facts`, `test_dec_016_injected_closing_tag_is_escaped_in_job_description`.
-- **Build:** build the user text from the job description and the candidate facts without name or address; map the validated reply to a `Recommendation`; write the system prompt file.
-- **Gate:** the checks pass; no CV name or address appears in any recommendation request in the tests.
 
 ### M7 — Settings
 
